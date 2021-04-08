@@ -1,14 +1,42 @@
-.grayish {
-  background-color: #2f3233;
-}
-.container, .card {
+.container {
   max-width: 500px;
-  border-radius: 5px;
-  border-bottom: 10px solid #232526;
-  background-color: #232526;
-  color: #cbc7c3;
+  border-radius: 4px;
+}
+.card {
+  padding: 15px 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 15px;
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+}
+input[type="text"] {
+  max-width: 1080px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 15px;
+  margin: 10px auto;
+  width:40%;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+}
+input[type="text"]:focus {
+  width: 80%;
 }
 
-.margintop {
-  margin-top: 200px;
+#table {
+  max-width: 1080px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 15px;
+  margin: auto;
+  width:80%;
+}
+#table th, #table td {
+  border: 1px solid rgb(56, 41, 41);
+
+  padding: 8px;
+}
+#table th{
+  padding: 10px 10px;
+  text-align: left;
+}
+body {
+  padding-top: 100px;
 }
