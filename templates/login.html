@@ -1,0 +1,25 @@
+{% extends "template.html" %}
+{% block content %}
+<div class="container flex-container">
+  <div class="card-decks">
+    <div class="text-center">
+      <div class="card-body">
+        <h3 class="card-title">HOSTEL MANAGEMENT SYSTEM</h3>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <form action="/actionPage.php">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Enter email" id="email">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Enter password" id="password">
+          </div>
+          <button class="btn btn-primary container-fluid" type="submit">Login</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "template.html" %}
+{% block content %}
+
+<div id="searchbar">
+  <input type="text" class="form-control" placeholder="search...">
+</div>
+<div id="table">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>Room no</th>
+        <th>capacity</th>
+        <th>rate</th>
+        <th>floor no</th>
+        <th>Facilities</th>
+      </tr>
+    <thead>
+    <tbody class="bg-light">
+      <tr>
+        <td>101</td>
+        <td>4</td>
+        <td>15000</td>
+        <td>1st floor</td>
+        <td>AC, Heater, AttachBath</td>
+      </tr>
+      <tr>
+        <td>102</td>
+        <td>3</td>
+        <td>16000</td>
+        <td>1st floor</td>
+        <td>AC, Heater, AttachBath</td>
+      </tr>
+      <tr>
+        <td>201</td>
+        <td>3</td>
+        <td>16000</td>
+        <td>2nd floor</td>
+        <td>AC, Heater, AttachBath</td>
+      </tr>
+      <tr>
+        <td>202</td>
+        <td>2</td>
+        <td>17000</td>
+        <td>2nd floor</td>
+        <td>AC, Heater, AttachBath, Desk</td>
+      </tr>
+      <tr>
+        <td>203</td>
+        <td>3</td>
+        <td>16000</td>
+        <td>2nd floor</td>
+        <td>AC, Heater, AttachBath</td>
+      </tr>
+      <tr>
+        <td>301</td>
+        <td>3</td>
+        <td>16000</td>
+        <td>3rd floor</td>
+        <td>AC, Heater, AttachBath</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
