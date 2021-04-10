@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Login</title>
+  <title>{% block title %}{% endblock %}</title>
+  <!-- link online bootstrap -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -16,36 +17,38 @@
   
   <!-- navigation bar -->
   <header>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-    <a href="{{ url_for('login')}}" class="navbar-brand">Logo</a>
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item">
-        <a href="#" class="nav-link">Room Allocation</a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url_for('searchroom')}}" class="nav-link">Search Room</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">Checkin Checkout</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">Payments</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">About</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">Contact us</a>
-      </li>
-    </ul>
-  </nav>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+      <a href="{{ url_for('login')}}" class="navbar-brand">Logo</a>
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link">Room Allocation</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('searchroom')}}" class="nav-link">Search Room</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Checkin Checkout</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Payments</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">About</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">Contact us</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
 
+  <!-- main content which will vary from page to page-->
   {% block content %}
   {% endblock %}
 
   <!-- footer -->
-  <footer class="">
-    
+  <footer>
+
   </footer>
 
 </body>
