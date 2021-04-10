@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block title %} login {% endblock %}
+{% block title %} sign up {% endblock %}
 
 {% block content %}
 <div class="container flex-container">
@@ -17,12 +17,12 @@
             <input type="username" class="form-control" placeholder="Enter your username" id="username" required>
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" placeholder="Enter password" id="password" required>
+            <input type="password" class="form-control" placeholder="Enter new password" id="password" required>
           </div>
-          <button class="btn btn-primary container-fluid" type="submit">Log In</button>
+          <button class="btn btn-primary container-fluid" type="submit">Register</button>
           <hr>
-          <p>Don't have an account?</p>
-          <a href="{{ url_for('signup')}}">Sign up to create a new one</a>
+          <p>Already have an account?</p>
+          <a href="{{ url_for('login') }}">Login into existing account</a>
         </form>
       </div>
     </div>
