@@ -15,28 +15,33 @@ cursor.execute('use hostel_db')
 class DBcontroller:
   def __init__(self):
     pass
-  def addRooms(self,roomNo,rate,capacity):
-    query = "INSERT INTO ROOM ( roomNo,rate,capacity) VALUES (%s, %s,%s)"
-    val = (roomNo,rate,capacity)
+  def add_room(self, room_no, price, capacity):
+    query = "INSERT INTO ROOM (room_no, price, capacity) VALUES (%s, %s,%s)"
+    val = (room_no,price,capacity)
     cursor.execute(query, val)
     mydb.commit()
     return 'Room added!'
 
   def search_rooms(self):
-    query = "SELECT roomNo,rate,capacity FROM ROOM;"
+    query = "SELECT room_no, price, capacity FROM ROOM;"
     cursor.execute(query)
     return cursor.fetchall()
 
-  def add_Package(self,package_id,price,description):
-    query = "INSERT INTO PACKAGE ( price,description) VALUES (%s, %s);"
+  def add_package(self, package_id, price, description):
+    query = "INSERT INTO PACKAGE (price, description) VALUES (%s, %s);"
     val = (package_id, price, description)
     cursor.executemany(query, val)
     mydb.commit()
     print(cursor.rowcount, "record inserted.")
     return "Package added"
 
-  def search_packages(self):    
+  def get_packages(self):    
     query = "SELECT * from packages;"
+    cursor.execute(query)
+    return cursor.fetchall()
+  
+  def search_packages_for_roomNo(self, room_no):    
+    query = "SELECT * from Room_Package WHERE room_id=room_no;"
     cursor.execute(query)
     return cursor.fetchall()
 
