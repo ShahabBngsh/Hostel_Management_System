@@ -1,57 +1,58 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-availRooms = [
-    {
-        "roomNo": 101,
-        "capacity": 4,
-        "rate": 15000,
-        "floorNo": 1
-    },
+availRooms=[[101,4,15000,1],[102,3,16000,1],[103,3,16000,1],[201,4,15000,2]]
+# availRooms = [
+#     {
+#         "roomNo": 101,
+#         "capacity": 4,
+#         "rate": 15000,
+#         "floorNo": 1
+#     },
 
-    {
-        "roomNo": 102,
-        "capacity": 3,
-        "rate": 16000,
-        "floorNo": 1
-    },
+#     {
+#         "roomNo": 102,
+#         "capacity": 3,
+#         "rate": 16000,
+#         "floorNo": 1
+#     },
 
-    {
-        "roomNo": 103,
-        "capacity": 3,
-        "rate": 16000,
-        "floorNo": 1
-    },
+#     {
+#         "roomNo": 103,
+#         "capacity": 3,
+#         "rate": 16000,
+#         "floorNo": 1
+#     },
 
-    {
-        "roomNo": 201,
-        "capacity": 4,
-        "rate": 15000,
-        "floorNo": 2
-    },
+#     {
+#         "roomNo": 201,
+#         "capacity": 4,
+#         "rate": 15000,
+#         "floorNo": 2
+#     },
 
-    {
-        "roomNo": 202,
-        "capacity": 3,
-        "rate": 16000,
-        "floorNo": 2
-    },
+#     {
+#         "roomNo": 202,
+#         "capacity": 3,
+#         "rate": 16000,
+#         "floorNo": 2
+#     },
 
-    {
-        "roomNo": 203,
-        "capacity": 3,
-        "rate": 16000,
-        "floorNo": 2
-    },
+#     {
+#         "roomNo": 203,
+#         "capacity": 3,
+#         "rate": 16000,
+#         "floorNo": 2
+#     },
 
-    {
-        "roomNo": 301,
-        "capacity": 2,
-        "rate": 17000,
-        "floorNo": 2
-    }
-]
+#     {
+#         "roomNo": 301,
+#         "capacity": 2,
+#         "rate": 17000,
+#         "floorNo": 2
+#     }
+# ]
 
 #Business Layer code by 'Piyush'
 class users:
@@ -144,7 +145,9 @@ class invoice_manager:
 
 #route to login.html page
 #NOTE: if you want to change function name, then also change in template.html file
-
+bookedRoom=0
+bookedPackage=0
+totalPrice=0
 @app.route("/")
 def login():
     return render_template("login.html")
@@ -157,6 +160,34 @@ def signup():
 def searchroom():
     return render_template("searchroom.html", availRooms=availRooms)
 
+@app.route("/roomSelection",methods=['GET', 'POST'])
+def roomSelection():
+    if request.method == 'POST':
+        if request.form.get("selectRoom"):
+            global bookedRoom
+            bookedRoom=request.form["RoomNo"]
+            # print(request.form["RoomNo"])
+            #packages=getPackages(RoomNo)
+            return render_template("searchpackages.html",roomNo=request.form["RoomNo"])#, packages=packages
 
+@app.route("/bookingConfirmation", methods=['GET','POST'])
+def bookingConfirmation():
+    if request.method == 'POST':
+        if request.form.get("selectPackage"):
+            global bookedRoom
+            global totalPrice
+            print("usama")
+            return render_template("bookingConfirmation.html",bookedRoom=bookedRoom,bookedPackage=request.form["packageNo"],totalPrice=10000)#, packages=packages
+
+# @app.package("/searchPackage")
+# def searchPackage():
+#     #function to get package of requested roomNo
+#     return render_template("searchroom.html", availRooms=availRooms)
+
+# @app.route("/packageSelection")
+# def packageSelection():
+#     if request.method == 'POST':
+#         pass
+        #send package to BL
 if __name__ == "__main__":
     app.run(debug=True)
