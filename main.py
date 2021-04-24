@@ -1,59 +1,10 @@
-from db_controller import *
+import db_controller
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 availRooms=[[101,4,15000,1],[102,3,16000,1],[103,3,16000,1],[201,4,15000,2]]
-# availRooms = [
-#     {
-#         "roomNo": 101,
-#         "capacity": 4,
-#         "rate": 15000,
-#         "floorNo": 1
-#     },
 
-#     {
-#         "roomNo": 102,
-#         "capacity": 3,
-#         "rate": 16000,
-#         "floorNo": 1
-#     },
-
-#     {
-#         "roomNo": 103,
-#         "capacity": 3,
-#         "rate": 16000,
-#         "floorNo": 1
-#     },
-
-#     {
-#         "roomNo": 201,
-#         "capacity": 4,
-#         "rate": 15000,
-#         "floorNo": 2
-#     },
-
-#     {
-#         "roomNo": 202,
-#         "capacity": 3,
-#         "rate": 16000,
-#         "floorNo": 2
-#     },
-
-#     {
-#         "roomNo": 203,
-#         "capacity": 3,
-#         "rate": 16000,
-#         "floorNo": 2
-#     },
-
-#     {
-#         "roomNo": 301,
-#         "capacity": 2,
-#         "rate": 17000,
-#         "floorNo": 2
-#     }
-# ]
 
 #Business Layer code by 'Piyush'
 class users:
@@ -97,7 +48,7 @@ class package_manager:
         #self.room_list = DB.search_rooms
         #return self.room_list
     def search_packages_by_roomNo(self, room_no):
-        return dbcont_obj.search_packages_for_roomNo(room_no)
+        return db_controller.dbcont_obj.search_packages_for_roomNo(room_no)
 
 
 class room_package:
@@ -137,7 +88,7 @@ class hostel():
     def search_packages(self):
         return self.PM.search_packages()
     def search_packages_by_roomNo(self, roomNo):
-        return self.RM.search_packages_by_roomNo(roomNo)
+        return self.PM.search_packages_by_roomNo(roomNo)
 
 class invoice:
     def __init__(self, fee_total, fee_status):
@@ -173,7 +124,7 @@ def roomSelection():
             bookedRoom=request.form["RoomNo"]
             # print(request.form["RoomNo"])
             #packages=getPackages(RoomNo)
-            return render_template("searchpackages.html",roomNo=request.form["RoomNo"])#, packages=packages
+            return render_template("searchPackages.html",roomNo=request.form["RoomNo"])#, packages=packages
 
 @app.route("/bookingConfirmation", methods=['GET','POST'])
 def bookingConfirmation():
