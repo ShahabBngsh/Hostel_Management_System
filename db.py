@@ -66,3 +66,23 @@ cursor.execute('use hostel_db')
 # for i in pkg:
 #     print(i)
 
+
+#######################  INSERT INTO ROOM_PACKAGE  ###########################
+# sql = "INSERT INTO Room_Package (charges, room_id, package_id) VALUES (%s, %s,%s);"
+# val = [
+#     (7500,101,1),
+#     (9000,101,1),
+#     (4500,201,1),
+#     (5500,201,2),
+#     (6500,201,2),
+#     (7500,203,3),
+#     (6500,203,2),
+#     (5500,203,2),
+#     (9000,203,3),
+#     (13000,204,1),
+#     ]
+# cursor.executemany(sql, val)
+# mydb.commit()
+# print(cursor.rowcount, "record inserted.")
+
+##################################################################

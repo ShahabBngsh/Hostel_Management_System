@@ -47,4 +47,4 @@ class DBcontroller:
 
 
 
-obj = DBcontroller
+dbcont_obj = DBcontroller

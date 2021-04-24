@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from db_controller import *
 
 app = Flask(__name__)
 
@@ -94,6 +95,9 @@ class package_manager:
         pass
         #self.room_list = DB.search_rooms
         #return self.room_list
+    def search_packages_by_roomNo(self, room_no):
+        return dbcont_obj.search_packages_for_roomNo(room_no)
+
 
 class room_package:
     def __init__(self, room, package):
@@ -130,8 +134,9 @@ class hostel():
         return self.RM.search_rooms()
 
     def search_packages(self):
-
         return self.PM.search_packages()
+    def search_packages_by_roomNo(self, roomNo):
+        return self.RM.search_packages_by_roomNo(roomNo)
 
 class invoice:
     def __init__(self, fee_total, fee_status):
