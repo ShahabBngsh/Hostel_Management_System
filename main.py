@@ -87,6 +87,7 @@ class Hostel():
     def search_packages_by_roomNo(self, roomNo):
         return self.PM.search_packages_by_roomNo(roomNo)
 
+
 class Invoice:
     def __init__(self, fee_total, fee_status):
         self.fee_total = fee_total
@@ -95,6 +96,7 @@ class Invoice:
 class Invoice_manager:
     def __init__(self):
         self.invoice_list = []
+
 
 # -----necessary  objects / variables-------
 #object for hostel class
@@ -116,6 +118,10 @@ def login():
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
+
+@app.route("/userHome")
+def home():
+    return render_template("userHome.html")
 
 @app.route("/searchroom")
 def searchroom():
