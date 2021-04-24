@@ -3,9 +3,19 @@
 {% block title %} searchrooms {% endblock %}
 
 {% block content %}
+
+
+
+
+<form action="roomSelection", method="POST" >
 <div id="searchbar">
-  <input type="text" class="form-control" placeholder="search...">
+<input type="text" name="RoomNo" class="form-control" placeholder="Enter Room No">
 </div>
+<p style="text-align: center;"><input type="submit" name="selectRoom" value="select"/></p>
+</form>
+
+
+
 <div id="table">
   <table class="table table-bordered table-hover">
     <thead class="thead-light">
@@ -19,14 +29,14 @@
     <tbody class="bg-light">
       {% for room in availRooms %}
         <tr>
-          <td>{{room.roomNo}}</td>
-          <td>{{room.capacity}}</td>
-          <td>{{room.rate}}</td>
-          <td>{{room.floorNo}}</td>
+          <td>{{room[0]}}</td>
+          <td>{{room[1]}}</td>
+          <td>{{room[2]}}</td>
+          <td>{{room[3]}}</td>
         </tr>
       {% endfor %}
       
-      
+
     </tbody>
   </table>
 </div>

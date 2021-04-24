@@ -1,0 +1,42 @@
+{% extends "template.html" %}
+
+{% block title %} searchrooms {% endblock %}
+
+{% block content %}
+
+
+
+<p style="text-align: center; font-size: larger;"><b >Available packages in room no: {{ roomNo }}</b></p>
+
+<form action="bookingConfirmation", method="POST" >
+<div id="searchbar">
+  <input type="text" name="packageNo" class="form-control" placeholder="Enter Package Number">
+</div>
+<p style="text-align: center;"><input type="submit" name="selectPackage" value="select"/></p>
+</form>
+
+
+
+<div id="table">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>Package No</th>
+        <th>rate</th>
+        <th>Description</th>
+      </tr>
+    <thead>
+    <tbody class="bg-light">
+      {% for room in availRooms %}
+        <tr>
+          <td>{{room.roomNo}}</td>
+          <td>{{room.capacity}}</td>
+          <td>{{room.rate}}</td>
+        </tr>
+      {% endfor %}
+      
+
+    </tbody>
+  </table>
+</div>
+{% endblock %}
