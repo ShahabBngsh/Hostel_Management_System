@@ -134,6 +134,7 @@ class hostel():
 
         return self.PM.search_packages()
 
+
 class invoice:
     def __init__(self, fee_total, fee_status):
         self.fee_total = fee_total
@@ -145,6 +146,8 @@ class invoice_manager:
 
 #route to login.html page
 #NOTE: if you want to change function name, then also change in template.html file
+
+
 bookedRoom=0
 bookedPackage=0
 totalPrice=0
@@ -156,8 +159,13 @@ def login():
 def signup():
     return render_template("signup.html")
 
+@app.route("/userHome")
+def home():
+    return render_template("userHome.html")
+
 @app.route("/searchroom")
 def searchroom():
+    #availRooms=getRoomsList()
     return render_template("searchroom.html", availRooms=availRooms)
 
 @app.route("/roomSelection",methods=['GET', 'POST'])
