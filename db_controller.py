@@ -22,8 +22,8 @@ class DBcontroller:
     mydb.commit()
     return 'Room added!'
 
-  def search_rooms(self):
-    query = "SELECT room_no, price, capacity FROM ROOM;"
+  def get_rooms(self):
+    query = "SELECT room_no, capacity, price, floor_no FROM Room;"
     cursor.execute(query)
     return cursor.fetchall()
 
@@ -41,8 +41,15 @@ class DBcontroller:
     return cursor.fetchall()
   
   def search_packages_for_roomNo(self, room_no):    
-    query = "SELECT * from Room_Package WHERE room_id=room_no;"
-    cursor.execute(query)
+    query = "SELECT * from Room_Package WHERE room_id=%s;"
+    val = (room_no, )
+    cursor.execute(query, val)
+    return cursor.fetchall()
+  
+  def get_hostel_details(self, hostel_id):
+    query = "SELECT * FROM Hostel WHERE id=%s;"
+    val = (hostel_id, )
+    cursor.execute(query, val)
     return cursor.fetchall()
 
 

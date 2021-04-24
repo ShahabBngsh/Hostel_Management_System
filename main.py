@@ -3,11 +3,11 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-availRooms=[[101,4,15000,1],[102,3,16000,1],[103,3,16000,1],[201,4,15000,2]]
+# availRooms=[[101,4,15000,1],[102,3,16000,1],[103,3,16000,1],[201,4,15000,2]]
 
 
 #Business Layer code by 'Piyush'
-class users:
+class Users:
     def __init__(self, name, password, cnic, contact_no):
         self.name = name
         self.password = password
@@ -15,7 +15,7 @@ class users:
         self.contact_no = contact_no
 
 
-class room:
+class Room:
     def __init__(self, room_no, rate, capacity, tenants):
         self.room_no = room_no
         self.rate = rate
@@ -23,87 +23,94 @@ class room:
         self.tenants = tenants
 
 
-class room_manager:
+class Room_manager:
     def __init__(self):
         self.room_list = []
 
-    def search_rooms(self):
-        pass
-        # self.room_list = DB.search_rooms
-        # return self.room_list
+    def get_rooms(self):
+        self.room_list = db_controller.dbcont_obj.get_rooms()
+        return self.room_list
 
 
-class package:
+class Package:
     def __init__(self, price, description):
         self.price = price
         self.description = description
 
 
-class package_manager:
+class Package_manager:
     def __init__(self):
         self.package_list = []
 
     def search_packages(self):
         pass
-        #self.room_list = DB.search_rooms
+        #self.room_list = DB.get_rooms
         #return self.room_list
     def search_packages_by_roomNo(self, room_no):
         return db_controller.dbcont_obj.search_packages_for_roomNo(room_no)
 
 
-class room_package:
+class Room_package:
     def __init__(self, room, package):
         self.room = room
         self.package = package
 
 
-class room_package_manager:
+class Room_package_manager:
     def __init__(self):
         self.room_package_list = []
 
     def reserve_room_and_package(self, room, package):
         pass
-        #self.room_package_list.append(room_package(room, package))
+        #self.room_package_list.append(Room_package(room, package))
         #return DB.reserve_room_and_package()
 
 
 
-class hostel():
-    def __init__(self, address, phone_no, total_rooms):
+class Hostel():
+    def __init__(self, name, address, phone_no=-1, total_rooms=-1):
+        self.name = name
         self.address = address
         self.phone_no = phone_no
         self.total_rooms = total_rooms
         self.room_list = []
-        self.PM = package_manager()
-        self.RM = room_manager()
-        self.RPM = room_package_manager()
+        self.PM = Package_manager()
+        self.RM = Room_manager()
+        self.RPM = Room_package_manager()
 
     def reserve_room_and_package(self, room, package):
         return self.RPM.reserve_room_and_package(room, package)
 
-    def search_rooms(self):
-
-        return self.RM.search_rooms()
+    def get_rooms(self):
+        return self.RM.get_rooms()
 
     def search_packages(self):
         return self.PM.search_packages()
     def search_packages_by_roomNo(self, roomNo):
         return self.PM.search_packages_by_roomNo(roomNo)
 
-class invoice:
+class Invoice:
     def __init__(self, fee_total, fee_status):
         self.fee_total = fee_total
         self.fee_status = fee_status
 
-class invoice_manager:
+class Invoice_manager:
     def __init__(self):
         self.invoice_list = []
 
-#route to login.html page
-#NOTE: if you want to change function name, then also change in template.html file
+# -----necessary  objects / variables-------
+#object for hostel class
+hostel_detail = db_controller.dbcont_obj.get_hostel_details(1)
+hostel = Hostel(hostel_detail[0][1], hostel_detail[0][2], hostel_detail[0][3])
+
 bookedRoom=0
 bookedPackage=0
 totalPrice=0
+
+
+#route to login.html page
+#NOTE: if you want to change function name, then also change in template.html file
+
 @app.route("/")
 def login():
     return render_template("login.html")
@@ -114,6 +121,7 @@ def signup():
 
 @app.route("/searchroom")
 def searchroom():
+    availRooms = hostel.get_rooms()
     return render_template("searchroom.html", availRooms=availRooms)
 
 @app.route("/roomSelection",methods=['GET', 'POST'])
@@ -133,7 +141,7 @@ def bookingConfirmation():
             global bookedRoom
             global totalPrice
             print("usama")
-            return render_template("bookingConfirmation.html",bookedRoom=bookedRoom,bookedPackage=request.form["packageNo"],totalPrice=10000)#, packages=packages
+            return render_template("bookingConfirmation.html", bookedRoom=bookedRoom, bookedPackage=request.form["packageNo"],totalPrice=10000)#, packages=packages
 
 # @app.package("/searchPackage")
 # def searchPackage():
