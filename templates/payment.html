@@ -1,0 +1,21 @@
+{% extends "template.html" %}
+
+{% block title %} login {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Payment Page</h1>
+</br>
+<form style="text-align: center;" action="payment", method="post">
+    UserId:  <input  type="number" name="userId"></br></br>
+    Room_Package_ID:  <input  type="number" name="R_P_ID"></br></br>
+    <input type="submit" value="SearchUser">
+</form>
+</br>
+    <p style="text-align: center; font-size: larger;"><b>Due Payment: </b>{{duePayment}}</p>
+</br>
+<form style="text-align: center;" action="AmountEnteredMsg", method="post">
+    EnterAmount:  <input  type="number" name="enteredAmount"></br></br>
+    <input type="submit" value="EnterAmount">
+</form>
+{% endblock %}

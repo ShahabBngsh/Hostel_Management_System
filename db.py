@@ -5,7 +5,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host = 'localhost',
   user = 'root',
-  password = 'root',
+  password = 'mysql@usama',
   auth_plugin = 'mysql_native_password'
 )
 
@@ -26,8 +26,8 @@ cursor.execute('use hostel_db')
 ################  INSERT INTO ROOM  #############################
 
 # sql = "INSERT INTO Room (room_no, price, capacity, floor_no, hostel_id) VALUES (%s, %s, %s, %s, %s);"
-# val = [(202, 9000, 3, 2, 1),
-# (203, 10000, 2, 2, 1),
+# val = [(202, 9000, 1, 2, 1),
+# (203, 10000, 1, 2, 1),
 # (204, 9000, 1, 2, 1)]
 # cursor.executemany(sql, val)
 
@@ -37,7 +37,7 @@ cursor.execute('use hostel_db')
 
 
 
-#############################################
+# ############################################
 # query = "SELECT room_no, price, capacity FROM Room;"
 # cursor.execute(query)
 # x=cursor.fetchall()
@@ -47,7 +47,7 @@ cursor.execute('use hostel_db')
 
 
 
-################  INSERT INTO PACKAGE  #############################
+# ###############  INSERT INTO PACKAGE  #############################
 
 # sql = "INSERT INTO Package (price, description) VALUES (%s, %s);"
 # val = [(2500,"refrigerator, Room Cooler"),
@@ -59,7 +59,7 @@ cursor.execute('use hostel_db')
 # print(cursor.rowcount, "record inserted.")
 
 
-##########################################
+# #########################################
 # query = "SELECT * from PACKAGE;"
 # cursor.execute(query)
 # pkg=cursor.fetchall()
@@ -67,22 +67,37 @@ cursor.execute('use hostel_db')
 #     print(i)
 
 
-#######################  INSERT INTO ROOM_PACKAGE  ###########################
+######################  INSERT INTO ROOM_PACKAGE  ###########################
 # sql = "INSERT INTO Room_Package (charges, room_id, package_id) VALUES (%s, %s,%s);"
 # val = [
-#     (7500,101,1),
-#     (9000,101,1),
-#     (4500,201,1),
-#     (5500,201,2),
-#     (6500,201,2),
-#     (7500,203,3),
-#     (6500,203,2),
-#     (5500,203,2),
-#     (9000,203,3),
-#     (13000,204,1),
+#     (4500,202,4),
+#     (5500,202,5),
+#     (6500,202,5),
+#     (7500,203,6),
+#     (6500,203,5),
+#     (5500,203,5),
+#     (9000,203,6),
+#     (13000,204,4),
 #     ]
 # cursor.executemany(sql, val)
 # mydb.commit()
 # print(cursor.rowcount, "record inserted.")
+
+#################################################################
+
+
+##################  INSERT INTO USER  ###########################
+# sql = "INSERT INTO User (name, password, cnic) VALUES (%s, %s, %s);"
+# val = [("Bilal","1234", "123456789")]
+# cursor.executemany(sql, val)
+
+# sql = "INSERT INTO User (name, password) VALUES (%s, %s);"
+# val = [("John", "2345")]
+# cursor.executemany(sql, val)
+
+# mydb.commit()
+
+# print(cursor.rowcount, "record inserted.")
+ALTER TABLE hostel_db.Room ADD reserve BOOL DEFAULT 0 NULL;
 
 ##################################################################

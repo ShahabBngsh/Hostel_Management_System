@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block title %} login {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Checkout Page</h1>
+</br>
+<form style="text-align: center;" action="checkout", method="post">
+    UserId:  <input  type="number" name="userId_checkout"></br></br>
+    Room_ID:  <input  type="number" name="roomId_checkout"></br></br>
+    <input type="submit" value="Checkout">
+</form>
+</br></br>
+<p style="text-align: center;font-size: x-large;">{{checkoutMessage}}</p>
+
+{% endblock %}

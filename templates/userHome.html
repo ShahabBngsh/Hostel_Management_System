@@ -5,16 +5,13 @@
 {% block content %}
 
 <h1 style="text-align: center;">Hostel Management System</h1> 
-<a href="/" target="_self"><button type="button" style="position:absolute; left: 1100px; ">Logout</button></p></a>       
+<a href="/login" target="_self"><button type="button" style="position:absolute; left: 1100px; ">Logout</button></p></a>       
 </br></br></br>
 <table align=center class="t1" width=75% >
     <tr>
         <td style="text-align: center;"><img src="{{url_for('static', filename='RoomImage2.jpg')}}" width=700px height=250px alt="image not found"><p><a href="searchroom" target="_self"><button type="button">Search/Book room and package</button></a></p></td>
     </tr>
 
-    <tr>
-        <td style="text-align: center;"><img src="{{url_for('static', filename='checkoutImage2.jpg')}}" width=700px height=250px alt="image not found"><p><a href="checkout" target="_self"><button type="button">Checkout</button></a></p></td>
-    </tr>
     
     <tr>
             <td style="text-align: center;"><img src="{{url_for('static', filename='cancelBooking2.jpg')}}" width=700px height=250px alt="image not found"><p><a href="cancelBooking" target="_self"><button type="button">Cancel Booking</button></a></p></td>

@@ -46,19 +46,29 @@ CREATE TABLE hostel_db.`Package` (
 
 -- hostel_db.Room definition
 
+-- CREATE TABLE hostel_db.`Room` (
+--   `price` int NOT NULL,
+--   `room_no` int NOT NULL AUTO_INCREMENT,
+--   `capacity` int NOT NULL DEFAULT 1,
+--   `floor_no` int DEFAULT NULL,
+--   `hostel_id` int NOT NULL,
+--   PRIMARY KEY (`room_no`),
+--   KEY `Room_FK` (`hostel_id`),
+--   CONSTRAINT `Room_FK` FOREIGN KEY (`hostel_id`) REFERENCES `Hostel` (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE hostel_db.`Room` (
   `price` int NOT NULL,
   `room_no` int NOT NULL AUTO_INCREMENT,
-  `capacity` int NOT NULL DEFAULT 1,
+  `capacity` int NOT NULL DEFAULT '1',
   `floor_no` int DEFAULT NULL,
   `hostel_id` int NOT NULL,
+  `reserve` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`room_no`),
   KEY `Room_FK` (`hostel_id`),
   CONSTRAINT `Room_FK` FOREIGN KEY (`hostel_id`) REFERENCES `Hostel` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
+-- ALTER Table hostel_db.Room ADD reserve BOOL DEFAULT 0 NULL;
 -- hostel_db.Room_Package definition
 
 CREATE TABLE hostel_db.`Room_Package` (

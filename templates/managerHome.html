@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block title %} searchrooms {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Hostel Management System</h1> 
+<a href="/managerLogin" target="_self"><button type="button" style="position:absolute; left: 1100px; ">Logout</button></p></a>       
+</br></br></br>
+<table align=center class="t1" width=75% >
+    <tr>
+        <td style="text-align: center;"><img src="{{url_for('static', filename='payment2.png')}}" width=700px height=300px alt="image not found"><p><a href="payment" target="_self"><button type="button">EnterPayment</button></a></p></td>
+    </tr>
+
+    <tr>
+        <td style="text-align: center;"><img src="{{url_for('static', filename='checkoutImage2.jpg')}}" width=700px height=300px alt="image not found"><p><a href="checkout" target="_self"><button type="button">Checkout</button></a></p></td>
+    </tr>
+    
+
+</table>
+
+{% endblock %}

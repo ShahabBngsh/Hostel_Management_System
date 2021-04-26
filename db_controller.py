@@ -4,7 +4,7 @@ import datetime
 mydb = mysql.connector.connect(
   host = 'localhost',
   user = 'root',
-  password = 'root',
+  password = 'mysql@usama',
   auth_plugin = 'mysql_native_password'
 )
 
@@ -52,6 +52,58 @@ class DBcontroller:
     cursor.execute(query, val)
     return cursor.fetchall()
 
+  def gen_invoice(self, due_payment, room_package_id, user_id,roomNo):
+    query = "INSERT INTO Invoice (due_amount, paid_amount, room_package_id, user_id) VALUES (%s,%s, %s, %s);"
+    val = (due_payment,0, room_package_id, user_id)
+    cursor.execute(query, val)
+    mydb.commit()
+    query2 = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
+    val2 = (1,roomNo)
+    cursor.execute(query2, val2)
+    mydb.commit()
+    print(cursor.rowcount, "record inserted.")
+    return "Invoice generated"
+  
+  def get_all_users(self):
+    query = "SELECT * FROM User;"
+    cursor.execute(query)
+    return cursor.fetchall()
 
+  def get_due_payment(self, user_id):
+    query = "SELECT user_id, due_amount FROM Invoice WHERE user_id=%s;"
+    val = (user_id, )
+    cursor.execute(query, val)
+    return cursor.fetchall()
+
+  def get_due_payment(self, user_id, room_package_id):
+    query = "SELECT user_id, due_amount FROM Invoice WHERE user_id=%s and room_package_id=%s;"
+    val = (user_id, room_package_id)
+    cursor.execute(query, val)
+    return cursor.fetchall()
+  
+  # def pay_amount(self, user_id, room_package_id, due_amount, payment):
+  #   print(user_id, room_package_id, due_amount, payment)
+  #   query = "UPDATE Invoice SET paid_amount = %s WHERE user_id=%s and room_package_id=%s;"
+  #   val = (payment, user_id, room_package_id)
+  #   cursor.execute(query, val)
+  #   mydb.commit()
+  #   print(cursor.rowcount, "record(s) affected")
+  #   return True
+
+  def pay_amount(self, user_id, room_package_id, due_amount, payment):
+    query = "UPDATE Invoice SET paid_amount=%s, due_amount=%s WHERE user_id=%s and room_package_id=%s;"
+    val = (payment, (due_amount-payment), user_id, room_package_id)
+    cursor.execute(query, val)
+    mydb.commit()
+    print(cursor.rowcount, "record(s) affected")
+    return True
+  
+  def checkout(self, roomno):
+    query = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
+    val = (0,roomno)
+    cursor.execute(query, val)
+    mydb.commit()
+    print((cursor.rowcount, "record(s) affected"))
+    return True 
 
 dbcont_obj = DBcontroller()
