@@ -1,3 +1,7 @@
+# standard error codes
+# _ERROR: 404           Not Found
+# _ERROR: 400           Bad Request
+
 from authorizenet import apicontractsv1
 from authorizenet.apicontrollers import *
 from decimal import *
@@ -131,19 +135,22 @@ class Invoice_manager:
         self.invoice_list = []
 
     def cash_payment(self, user_id, room_package_id, due_amount, payment):
-        self.invoice_list.append(Invoice(due_amount, payment))
-        if payment >= due_amount:
-            ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, due_amount)
-            if (ret_val):
-                return (payment - due_amount)
+        if due_amount>0 and payment>0:
+            self.invoice_list.append(Invoice(due_amount, payment))
+            if payment >= due_amount:
+                ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, due_amount)
+                if (ret_val):
+                    return (payment - due_amount)
+                else:
+                    return -1
             else:
-                return -1
+                ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, payment)
+                if (ret_val):
+                    return (payment - due_amount)
+                else:
+                    return -1
         else:
-            ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, payment)
-            if (ret_val):
-                return (payment - due_amount)
-            else:
-                return -1
+            return "_ERROR: 400" #bad request
 
     def credit_payment(self, card_no, expiration_date, amount, merchant_id):
         if (self.charge(card_no, expiration_date, amount, merchant_id) != -1):
