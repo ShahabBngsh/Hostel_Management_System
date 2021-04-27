@@ -6,7 +6,6 @@ import credentials  # importing our credentials from credentials.py
 
 import db_controller
 from flask import Flask, render_template, request, redirect, url_for
-
 app = Flask(__name__)
 
 #Business Layer code by 'Piyush'
@@ -52,10 +51,10 @@ class Package_manager:
         pass
         #self.room_list = DB.get_rooms
         #return self.room_list
+
     def search_packages_by_roomNo(self, room_no):
         self.package_list = db_controller.dbcont_obj.search_packages_for_roomNo(room_no)
-        return self.package_list
-    
+        return self.package_list 
 
 
 class Room_package:
@@ -99,12 +98,6 @@ class Hostel():
     def search_packages_by_roomNo(self, roomNo):
         return self.PM.search_packages_by_roomNo(roomNo)
 
-    def get_due_payment(self, userid):
-        return self.IM.get_due_payment(userid)
-
-    def cash_payment(self, room_package, charges, payment):
-        return self.IM.cash_payment(room_package, charges, payment)
-
     def credit_payment(self, card_no, expiration_date, amount, merchant_id = 1):
         return self.IM.credit_payment(card_no, expiration_date, amount, merchant_id)
 
@@ -120,7 +113,7 @@ class Hostel():
     def get_due_payment(self, userid, room_package_id):
         return self.IM.get_due_payment(userid, room_package_id)
     
-    def pay_amount(self, user_id, room_package_id, due_amount, payment):
+    def pay_cash(self, user_id, room_package_id, due_amount, payment):
         return self.IM.cash_payment(user_id, room_package_id, due_amount, payment)
 
 class Invoice:
@@ -140,13 +133,13 @@ class Invoice_manager:
     def cash_payment(self, user_id, room_package_id, due_amount, payment):
         self.invoice_list.append(Invoice(due_amount, payment))
         if payment >= due_amount:
-            ret_val = db_controller.dbcont_obj.pay_amount(user_id, room_package_id, due_amount, due_amount)
+            ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, due_amount)
             if (ret_val):
                 return (payment - due_amount)
             else:
                 return -1
         else:
-            ret_val = db_controller.dbcont_obj.pay_amount(user_id, room_package_id, due_amount, payment)
+            ret_val = db_controller.dbcont_obj.pay_cash(user_id, room_package_id, due_amount, payment)
             if (ret_val):
                 return (payment - due_amount)
             else:
@@ -154,7 +147,7 @@ class Invoice_manager:
 
     def credit_payment(self, card_no, expiration_date, amount, merchant_id):
         if (self.charge(card_no, expiration_date, amount, merchant_id) != -1):
-            self.invoice_list.append(invoice(amount, amount))
+            self.invoice_list.append(Invoice(amount, amount))
             # if (DB.payment(self.invoice_list[-1]) ):
             #     return (payment - charges)
             # else:
@@ -165,7 +158,7 @@ class Invoice_manager:
 
     def get_due_payment(self, userid , room_package_id):
         return db_controller.dbcont_obj.get_due_payment(userid, room_package_id)
- 
+
     def charge(self, card_number, expiration_date, amount, merchant_id):
         creditCard = apicontractsv1.creditCardType()
         creditCard.cardNumber = card_number
@@ -197,9 +190,7 @@ class Invoice_manager:
 
     def gen_invoice(self, due_payment, room_package_id, user_id,roomNo):
         return db_controller.dbcont_obj.gen_invoice(due_payment, room_package_id, user_id,roomNo)
- 
-    def checkout(self, roomno):
-        return self.RM.checkout(roomno)
+
 
 # -----necessary  objects / variables-------
 #object for hostel class
@@ -323,7 +314,7 @@ def AmountEnteredMsg():
         global room_package_id_manager
         global due_payment
         # print(int(userId_manager), int(room_package_id_manager), int(due_payment), int(request.form["enteredAmount"]))
-        hostel.pay_amount(int(userId_manager), int(room_package_id_manager), int(due_payment), int(request.form["enteredAmount"]))
+        hostel.pay_cash(int(userId_manager), int(room_package_id_manager), int(due_payment), int(request.form["enteredAmount"]))
         return render_template("AmountEnteredMsg.html",amount=request.form["enteredAmount"])
 # @app.package("/searchPackage")
 # def searchPackage():
