@@ -1,2 +1,3 @@
 #following directory will be ignored
 __pycache__
+.vscode
