@@ -20,43 +20,70 @@ class DBcontroller:
     val = (room_no,price,capacity)
     cursor.execute(query, val)
     mydb.commit()
-    return 'Room added!'
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 400"
+    return [], error
 
   def get_rooms(self):
     query = "SELECT room_no, capacity, price, floor_no FROM Room;"
     cursor.execute(query)
-    return cursor.fetchall()
+    result = cursor.fetchall()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
 
   def add_package(self, package_id, price, description):
     query = "INSERT INTO PACKAGE (price, description) VALUES (%s, %s);"
     val = (package_id, price, description)
     cursor.executemany(query, val)
     mydb.commit()
-    print(cursor.rowcount, "record inserted.")
-    return "Package added!"
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 400"
+    return [], error
 
   def get_packages(self):    
     query = "SELECT * from packages;"
     cursor.execute(query)
-    if cursor.rowcount == 0:
-      return "_ERROR: 404"
-    return cursor.fetchall()
+    result = cursor.fetchall()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
   
   def search_packages_for_roomNo(self, room_no):    
     query = "SELECT * from Room_Package WHERE room_id=%s;"
     val = (room_no, )
     cursor.execute(query, val)
-    if cursor.rowcount == 0:
-      return "_ERROR: 404"
-    return cursor.fetchall()
+    result = cursor.fetchall()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
   
   def get_hostel_details(self, hostel_id):
     query = "SELECT * FROM Hostel WHERE id=%s;"
     val = (hostel_id, )
     cursor.execute(query, val)
-    if cursor.rowcount == 0:
-      return "_ERROR: 404"
-    return cursor.fetchall()
+    result = cursor.fetchone()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
 
   def gen_invoice(self, due_payment, room_package_id, user_id,roomNo):
     query = "INSERT INTO Invoice (due_amount, paid_amount, room_package_id, user_id) VALUES (%s,%s, %s, %s);"
@@ -66,40 +93,59 @@ class DBcontroller:
     query2 = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
     val2 = (1, roomNo)
     cursor.execute(query2, val2)
-
     mydb.commit()
-    print(cursor.rowcount, "record inserted.")
-    return "Invoice generated"
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 400"
+    return [], error
   
   def get_all_users(self):
     query = "SELECT * FROM User;"
     cursor.execute(query)
-    if cursor.rowcount == 0:
-      return "_ERROR: 404"
-    return cursor.fetchall()
+    result = cursor.fetchall()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
 
   def get_due_payment(self, user_id, room_package_id):
-    query = "SELECT user_id, due_amount FROM Invoice WHERE user_id=%s and room_package_id=%s;"
+    query = "SELECT due_amount FROM Invoice WHERE user_id=%s and room_package_id=%s;"
     val = (user_id, room_package_id)
     cursor.execute(query, val)
-    if cursor.rowcount == 0:
-      return "_ERROR: 404"
-    return cursor.fetchall()
+    result = cursor.fetchone()
+
+    error = None
+    print(cursor.rowcount, "rows returned")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
 
   def pay_cash(self, user_id, room_package_id, due_amount, payment):
     query = "UPDATE Invoice SET paid_amount=%s, due_amount=%s WHERE user_id=%s and room_package_id=%s;"
     val = (payment, (due_amount-payment), user_id, room_package_id)
     cursor.execute(query, val)
     mydb.commit()
-    print(cursor.rowcount, "record(s) affected")
-    return True
+
+    error = None
+    print(cursor.rowcount, "rows affected")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 400"
+    return [], error
   
   def checkout(self, roomno):
     query = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
     val = (0,roomno)
     cursor.execute(query, val)
     mydb.commit()
-    print((cursor.rowcount, "record(s) affected"))
-    return True 
+
+    error = None
+    print(cursor.rowcount, "rows affected")
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return [], error
 
 dbcont_obj = DBcontroller()
