@@ -25,7 +25,7 @@ class DBcontroller:
     print(cursor.rowcount, "rows returned")
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 400"
-    return [], error
+    return None, error
 
   def get_rooms(self):
     query = "SELECT room_no, capacity, price, floor_no FROM Room;"
@@ -48,7 +48,7 @@ class DBcontroller:
     print(cursor.rowcount, "rows returned")
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 400"
-    return [], error
+    return None, error
 
   def get_packages(self):    
     query = "SELECT * from packages;"
@@ -99,7 +99,7 @@ class DBcontroller:
     print(cursor.rowcount, "rows returned")
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 400"
-    return [], error
+    return None, error
   
   def get_all_users(self):
     query = "SELECT * FROM User;"
@@ -111,6 +111,28 @@ class DBcontroller:
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 404"
     return result, error
+
+  def get_user(self, username):
+    query = "SELECT * FROM User WHERE username=%s;"
+    val = (username, )
+    cursor.execute(query, val)
+    result = cursor.fetchone()
+    error = None
+
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 404"
+    return result, error
+
+  def register_user(self, name, password, cnic, contact_no):
+    query = "INSERT INTO User (name, password, cnic, contact_no) VALUES (%s, %s, %s, %s);"
+    val = (name, password, cnic, contact_no)
+    cursor.execute(query, val)
+    mydb.commit()
+    error = None
+
+    if cursor.rowcount == -1 or cursor.rowcount == 0:
+      error = "_ERROR: 400"
+    return None, error
 
   def get_due_payment(self, user_id, room_package_id):
     query = "SELECT due_amount FROM Invoice WHERE user_id=%s and room_package_id=%s;"
@@ -134,7 +156,7 @@ class DBcontroller:
     print(cursor.rowcount, "rows affected")
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 400"
-    return [], error
+    return None, error
   
   def checkout(self, roomno):
     query = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
@@ -146,6 +168,6 @@ class DBcontroller:
     print(cursor.rowcount, "rows affected")
     if cursor.rowcount == -1 or cursor.rowcount == 0:
       error = "_ERROR: 404"
-    return [], error
+    return None, error
 
 dbcont_obj = DBcontroller()

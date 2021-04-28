@@ -3,8 +3,15 @@
 # _ERROR: 400           Bad Request
 # _SUCCESS              return success if DB is altered  but nothing to return
 
-from flask import Flask, render_template, request, redirect, url_for, flash
-
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    g
+)
 from BL import (
     Users,
     Room, Room_manager,
@@ -14,6 +21,9 @@ from BL import (
     Invoice, Invoice_manager,
     db_controller
 )
+import functools
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
 app = Flask(__name__)
 app.secret_key = '\xd6\xf0\xed\xf1\xcf\x9d\x12\xac`\xb9\xeeZ\xd0_\xc0\xbf'
 
@@ -35,19 +45,66 @@ userid=0
 #route to login.html page
 #NOTE: if you want to change function name, then also change in template.html file
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for("login"))
+        return view(**kwargs)
+    return wrapped_view
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        users=hostel.get_all_users()
-        for user in users:
-            print(user[1],"  ",user[2]) 
-            if request.form['userUsername']==user[1] and request.form['userPassword']==str(user[2]):
-                global userid
-                userid=user[0]
-                return render_template("userHome.html")
-                # return redirect(url_for('userHome'))
-        return render_template('login.html',loginMessage="Invalid Login")
-    return render_template('login.html',loginMessage="NULL")
+        username = request.form['username']
+        password = request.form['password']
+
+        user, error = hostel.get_user(username)
+        if error is not None:
+            error = "Invalid username"
+            # flash(error)
+        elif not check_password_hash(user[2], password):
+            error = "Invalid password"
+        
+        if error is None:
+            return redirect(url_for("/managerHome"))
+
+        flash(error)
+    return render_template("templates/login.html")
+
+    
+    #     users=hostel.get_all_users()
+    #     for user in users:
+    #         print(user[1],"  ",user[2]) 
+    #         if request.form['userUsername']==user[1] and request.form['userPassword']==str(user[2]):
+    #             global userid
+    #             userid=user[0]
+    #             return render_template("userHome.html")
+    #             # return redirect(url_for('userHome'))
+    #     return render_template('login.html', loginMessage="Invalid Login")
+    # return render_template('login.html', loginMessage="NULL")
+
+@app.route("/signup", methods=['GET','POST'])
+def signup():
+    if request.method == 'POST':
+        username  = request.form["username"]
+        password  = request.form["password"]
+        cnic      = request.form["cnic"]
+        contact_no= request.form["contact_no"]
+        error = None
+
+        if username is None:
+            error = "username required"
+        elif password is None:
+            error = "password required"
+        else:
+            user, error = hostel.get_user(username)
+            if error is not None:
+                error = "user already exists"
+
+        if error is None:
+            hostel.register_user(user, generate_password_hash(password), cnic, contact_no)
+    return render_template("signup.html")
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/managerLogin', methods=['GET','POST'])
@@ -55,17 +112,14 @@ def managerLogin():
     if request.method == 'POST':
         if request.form['employeeUsername']=="manager" and request.form['employeePassword']=="manager123":
             return redirect(url_for('managerHome'))
-        return render_template('managerLogin.html',loginMessage="Invalid Login")
-    return render_template('managerLogin.html',loginMessage="NULL")
+        return render_template('managerLogin.html', loginMessage="Invalid Login")
+    return render_template('managerLogin.html', loginMessage="NULL")
 
 @app.route("/managerHome")
 def managerHome():
     return render_template("managerHome.html")
 
 
-@app.route("/signup")
-def signup():
-    return render_template("signup.html")
 
 @app.route("/userHome")
 def home():
@@ -76,7 +130,7 @@ def searchroom():
     availRooms = hostel.get_rooms()
     return render_template("searchroom.html", availRooms=availRooms)
 
-@app.route("/roomSelection",methods=['GET', 'POST'])
+@app.route("/roomSelection", methods=['GET', 'POST'])
 def roomSelection():
     if request.method == 'POST':
         if request.form.get("selectRoom"):

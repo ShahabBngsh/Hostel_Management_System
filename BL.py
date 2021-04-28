@@ -108,6 +108,12 @@ class Hostel():
     def get_all_users(self):
         return db_controller.dbcont_obj.get_all_users()
 
+    def get_user(self, user_id):
+      return db_controller.dbcont_obj.get_user(user_id)
+
+    def register_user(self, name, password, cnic=None, contact_no=None):
+      return db_controller.dbcont_obj.register_user(name, password, cnic, contact_no)
+
     def get_due_payment(self, userid, room_package_id):
         return self.IM.get_due_payment(userid, room_package_id)
     
