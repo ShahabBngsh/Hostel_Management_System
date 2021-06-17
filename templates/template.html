@@ -18,7 +18,7 @@
   <!-- navigation bar -->
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
-      <a href="{{ url_for('login')}}" class="navbar-brand">Logo</a>
+      <a href="{{ url_for('userLogin')}}" class="navbar-brand">Logo</a>
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
           <a href="#" class="nav-link">Room Allocation</a>
@@ -27,10 +27,10 @@
           <a href="{{ url_for('searchroom')}}" class="nav-link">Search Room</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Checkin Checkout</a>
+          <a href="{{ url_for('cancelbooking')}}" class="nav-link">Cancel Booking</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Payments</a>
+          <a href="{{ url_for('allcustomerdetails')}}" class="nav-link">Due Payments</a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">About</a>

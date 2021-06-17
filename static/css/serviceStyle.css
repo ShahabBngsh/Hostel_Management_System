@@ -1,0 +1,152 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.cover{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-color: black;
+    opacity: 0.7;
+    z-index: 1;
+}
+.img-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55vh;
+    width: 100%;
+    background-image: url(/static/images/homeBackground6.jpg);
+    background-repeat: no-repeat;
+    background-size: cover  ;
+}
+
+.services-main-content{
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.services-main-content h1{
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 100;
+}
+.services-main-content p{
+    margin-top: 0.3rem;
+    color: white;
+}
+.services-container{
+    padding-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* background-color: rgb(0, 0, 0,0.7); */
+    padding-bottom: 1rem;
+}
+
+.service{
+    text-align: center;
+    width: 25%;
+    /* width: 100%; */
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+
+}
+
+.service .btn1{
+    background-color: #6b6bff;
+    text-decoration: none;
+    color: black;
+    width: 90%;
+    border:none;
+    /* border: 1px solid black; */
+    padding:0.5rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+.service .btn1:hover{
+    cursor: pointer;
+    transition-property: all;
+    transition-duration: 500ms;
+    background-color: rgb(51, 51, 253);
+    transform: scale(105%);
+}
+
+
+.service-img{
+    height: 150px;
+    width: 90%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: 2rem;
+}
+
+.service-img.paymentImg{
+    background-image: url(/static/images/payment2.jpg);
+}
+.service-img.checkoutImg{
+    background-image: url(/static/images/checkoutImage1.jpg);
+}
+.service-img.duePaymentImg{
+    background-image: url(/static/images/duePayment1.jpg);
+}
+.service-img.customerDetailImg{
+    background-image: url(/static/images/customerDetail3.jpg);
+}
+
+.service-img.roomPackageImg{
+    background-image: url(/static/images/roomBooking2.jpg);
+}
+.service-img.cancelBookingImg{
+    background-image: url(/static/images/cancelBooking.jpg);
+}
+.service-img.updateRoomImg{
+    background-image: url(/static/images/updateRoom1.jpeg);
+}
+.service-img.updatePackageImg{
+    background-image: url(/static/images/updatePackage1.jpg);
+}
+.service-img.tenantRecordImg{
+    background-image: url(/static/images/tenantRecord1.jpg);
+}
+.service p{
+    width: 80%;
+}
+
+@media (max-width:1000px){
+    .services-container{
+        flex-direction: column;
+    }
+    .service{
+        width: 70%;
+        margin-bottom: 1rem;
+    }
+    .service-img{
+        height: 250px;
+    }
+}
+
+@media (max-width:600px) {
+    .services-container{
+        flex-direction: column;
+    }
+    .service{
+        width: 90%;
+        margin-bottom: 1rem;
+    }
+    .service-img{
+        height: 200px;
+    }
+}

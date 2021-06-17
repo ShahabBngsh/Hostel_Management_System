@@ -1,0 +1,30 @@
+.footer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+
+.footer .footerLinks{
+    margin-top: 0.4 rem;
+
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+}
+
+.footer .footerLinks a{
+    margin: 0rem 0.5rem;
+    text-decoration: none;
+    color: #3333fd;
+}
+
+.footer .footerLinks a:hover{
+    text-decoration: underline;
+}

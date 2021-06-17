@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block title %} Due Payment {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Due Payment</h1>
+</br>
+<form style="text-align: center;" action="duePayment", method="post">
+    User ID:  <input  type="number" name="userId"></br></br>
+    Room Package ID:  <input  type="number" name="roomPkgId"></br></br>
+    <input type="submit" value="getDuePayment">
+</form>
+{% if duePayment !="NULL" %}
+<p style="text-align: center; font-size: larger;"><b>{%print(duePayment)%}</p></b>
+{% endif %}
+{% endblock %}

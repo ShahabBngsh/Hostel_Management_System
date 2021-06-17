@@ -1,0 +1,35 @@
+{% extends "template.html" %}
+
+{% block title %} login {% endblock %}
+
+{% block content %}
+
+
+<div class="container flex-container">
+  <div class="card-decks">
+    <div class="text-center">
+      <div class="card-body">
+        <h3 class="card-title">User Login Page</h3>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="card-body">
+        <form action="login", method="post">
+          <div class="form-group">
+            <input type="username" class="form-control" placeholder="Enter your username" id="username" name="userUsername" required>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Enter password" id="password" name="userPassword" required>
+          </div>
+          <input type="submit" value="submit">
+          <hr>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% if loginMessage !="NULL" %}
+<p style="text-align: center; font-size: larger;"><b>{%print(loginMessage)%}</p></b>
+{% endif %}
+
+{% endblock %}

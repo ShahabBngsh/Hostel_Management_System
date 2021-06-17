@@ -1,35 +1,74 @@
-{% extends "template.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/loginStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Employee Login Page</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="cover"></div>
+        <div class="login-container">
+            <!-- <div class="cover"></div> -->
+            <div class="leftLogin">
+                <div class="logoContainer">
+                    <!-- <h1>Employee Login</h1> -->
+                    <img src="/static/images/logo2.png" alt="">
+                </div>
+                <div class="formContainer">
+                    <form action="managerLogin", method="post">
+                        <label>Username</label>
+                        <div class="input-container">
+                            <i class="fa fa-user icon"></i>
+                            <input class="input-field" type="username" placeholder="Email or Username" id="username" name="employeeUsername">
+                          </div>
+                        <label>Password</label>
+                        <div class="input-container">
+                            <i class="fa fa-key icon"></i>
+                            <input class="input-field" type="password" placeholder="Password" id="password" name="employeePassword">
+                          </div>
+                        <input type="submit" value="LOGIN">
+                    </form>
+                </div>
+                <div class="otherLoginOptions1">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <div class="otherLoginOptions2">
+                    <p>Or Login with</p>
+                    <div class="facebook">
+                        <a href="#" class="fa fa-facebook"></a>
+                    </div>
+                    <div class="Google">
+                        <a href="#" class="fa fa-google"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="rightSignUp">
+                <p>usama</p>
+            </div> -->
+            <div class="invalid-msg">
+                {% if loginMessage !="NULL" %}
+                <p style="text-align: center; font-size: larger;"><b>{%print(loginMessage)%}</p></b>
+                {% endif %}
+            </div>
+            <div class="footer">
+                <div class="footerCopyRight">
+                    <p>&copy; Customer Login Form All rights reserved | Designed by Fastians</p>
+                </div>
 
-{% block title %} login {% endblock %}
-
-{% block content %}
-
-
-<div class="container flex-container">
-  <div class="card-decks">
-    <div class="text-center">
-      <div class="card-body">
-        <h3 class="card-title">Manager Login Page</h3>
-      </div>
+                <div class="footerLinks">
+                    <a href="#">Terms of use</a>
+                    <p>|</p>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+        
     </div>
-    <div class="card text-center">
-      <div class="card-body">
-        <form action="managerLogin", method="post">
-          <div class="form-group">
-            <input type="username" class="form-control" placeholder="Enter your username" id="username" name="employeeUsername" required>
-          </div>
-          <div class="form-group">
-            <input type="password" class="form-control" placeholder="Enter password" id="password" name="employeePassword" required>
-          </div>
-          <input type="submit" value="submit">
-          <hr>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-{% if loginMessage !="NULL" %}
-<p style="text-align: center; font-size: larger;"><b>{%print(loginMessage)%}</p></b>
-{% endif %}
 
-{% endblock %}
+
+</body>
+</html>

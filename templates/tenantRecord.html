@@ -1,0 +1,41 @@
+{% extends "template.html" %}
+
+{% block title %} searchcustomer {% endblock %}
+
+{% block content %}
+
+
+<form action="customerSelection", method="POST" >
+  <div id="searchbar">
+  <input type="text" name="customerID" class="form-control" placeholder="Enter tenant ID">
+  </div>
+  <p style="text-align: center;"><input type="submit" name="selectCustomer" value="select"/></p>
+  </form>
+
+<div id="table">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>Tenant ID</th>
+        <th>Room_Package_Id</th>
+        <th>Due_Amount</th>
+        <th>Payed Amount</th>
+        <th>start-date</th>
+        <th>end_date</th>
+      </tr>
+    <thead>
+    <tbody class="bg-light">
+      {% for record in tenantRecord %}
+        <tr>
+          <td>{{record[7]}}</td>
+          <td>{{record[6]}}</td>
+          <td>{{record[1]}}</td>
+          <td>{{record[2]}}</td>
+          <td>{{record[3]}}</td>
+          <td>{{record[4]}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

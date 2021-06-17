@@ -1,0 +1,27 @@
+{% extends "template.html" %}
+
+{% block title %} searchrooms {% endblock %}
+
+{% block content %}
+
+
+<div id="table">
+  <table class="table table-bordered table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th>Tenant ID</th>
+        <th>Tenant Name</th>
+        <th>Due Amount</th>
+        <th>Due Date</th>
+      </tr>
+    <thead>
+    <tbody class="bg-light">
+      <tr>
+        <td>{{customer[3]}}</td>
+        <td>{{customer[0]}}</td>
+        <td>{{customer[2]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

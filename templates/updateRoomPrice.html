@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block title %} updateRoomPrices {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Update Room Price</h1>
+</br>
+<form style="text-align: center;" action="updateRoomPrice", method="post">
+    RoomId:  <input  type="number" name="roomId"></br></br>
+    New Price:  <input  type="number" name="newPrice"></br></br>
+    <input type="submit" value="Update Price">
+</form>
+{% if msg !="NULL" %}
+<p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
+{% endif %}
+{% endblock %}

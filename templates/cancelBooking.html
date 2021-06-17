@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block title %} Cancel Booking {% endblock %}
+
+{% block content %}
+
+<h1 style="text-align: center;">Cancel Booking</h1>
+</br>
+<form style="text-align: center;" action="cancelBooking", method="post">
+    User ID:  <input  type="number" name="userId"></br></br>
+    Room Package ID:  <input  type="number" name="roomPkgId"></br></br>
+    <input type="submit" value="Cancel Booking">
+</form>
+{% if bookingCancelMessage !="NULL" %}
+<p style="text-align: center; font-size: larger;"><b>{%print(bookingCancelMessage)%}</p></b>
+{% endif %}
+{% endblock %}
