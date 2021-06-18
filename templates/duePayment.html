@@ -1,17 +1,74 @@
-{% extends "template.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/duepayments.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(".paybutton").click(function() {
+        var $item = $(this).closest("tr")   // Finds the closest row <tr> 
+                        .find(".flex-column")     // Gets a descendent with class="nr"
+                        .text();         // Retrieves the text within <td>
+        $("#resultas").append($item);       // Outputs the answer
+        });
+        $.each($tds, function() {               // Visits every single <td> element
+    console.log($(this).text());        // Prints out the text within the <td>
+    });
+    </script>
+    
+</head>
 
-{% block title %} Due Payment {% endblock %}
 
-{% block content %}
+<body>
+    <div class="center">
+    <div class="flex-box">
+        <h3 id="table-h3">Due Payments</h3>
+        <form action="roomSelection", method="POST" class="flex-row">
+            <div id="searchbar" class="flex-column">
+            <input type="text" name="RoomNo" class="form-control" placeholder="Enter Customer Name">
+            </div>
+            <p class="flex-column"> <input type="submit" name="selectRoom" value="select"/></p>
+        </form>
 
-<h1 style="text-align: center;">Due Payment</h1>
-</br>
-<form style="text-align: center;" action="duePayment", method="post">
-    User ID:  <input  type="number" name="userId"></br></br>
-    Room Package ID:  <input  type="number" name="roomPkgId"></br></br>
-    <input type="submit" value="getDuePayment">
-</form>
-{% if duePayment !="NULL" %}
-<p style="text-align: center; font-size: larger;"><b>{%print(duePayment)%}</p></b>
-{% endif %}
-{% endblock %}
+        <table class="flex-container">
+        <thead>
+            <tr class="flex-container-header">
+                <th class="flex-column-th" style="flex: 30%;">ID</th>
+                <th class="flex-column-th">User</th>
+                <th class="flex-column-th">Room#</th>
+                <th class="flex-column-th">Amount</th>
+                <th class="flex-column-th" style="flex: 25%;">Pay</th>
+                <br>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="flex-container-inner">
+                <td class="flex-column" style="flex: 30%">1</td>
+                <td class="flex-column">Usama</td>
+                <td class="flex-column">101</td>
+                <td class="flex-column">5000</td>
+                <td><a href="#" class="paybutton">+</a></td>
+            </tr>
+            <tr class="flex-container-inner">
+                <td class="flex-column" style="flex: 30%">2</td>
+                <td class="flex-column">Piyush</td>
+                <td class="flex-column">101</td>
+                <td class="flex-column">5000</td>
+                <td><a href="#" class="paybutton">+</a></td>
+            </tr>
+            <tr class="flex-container-inner">
+                <td class="flex-column" style="flex: 30%">3</td>
+                <td class="flex-column">Zain</td>
+                <td class="flex-column">101</td>
+                <td class="flex-column">5000</td>
+                <td><a href="#" class="paybutton">+</a></td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    </div>
+
+</body>
+</html>
+

@@ -4,14 +4,20 @@
 
 {% block content %}
 
-<h1 style="text-align: center;">Update Room Price</h1>
-</br>
-<form style="text-align: center;" action="updateRoomPrice", method="post">
-    RoomId:  <input  type="number" name="roomId"></br></br>
-    New Price:  <input  type="number" name="newPrice"></br></br>
-    <input type="submit" value="Update Price">
-</form>
-{% if msg !="NULL" %}
-<p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
-{% endif %}
+<div class="center">
+<div class="flex-box">
+    <h3 id=table-h3">Update Room Price </h3>
+    <form class="flex-column" action="updateRoomPrice", method="post">
+        <div id="seachbar" class="flex-column">
+            <input class="form-control" type="number" name="roomId" placeholder="enter room id">
+            <input class="form-control" type="number" name="newPrice" placeholder="enter new price">
+            <input type="submit" value="Update Price">
+
+        </div>
+    </form>
+    {% if msg !="NULL" %}
+    <p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
+    {% endif %}
+</div>
+</div>
 {% endblock %}

@@ -3,15 +3,17 @@
 {% block title %} Cancel Booking {% endblock %}
 
 {% block content %}
-
-<h1 style="text-align: center;">Cancel Booking</h1>
-</br>
-<form style="text-align: center;" action="cancelBooking", method="post">
-    User ID:  <input  type="number" name="userId"></br></br>
-    Room Package ID:  <input  type="number" name="roomPkgId"></br></br>
-    <input type="submit" value="Cancel Booking">
-</form>
-{% if bookingCancelMessage !="NULL" %}
-<p style="text-align: center; font-size: larger;"><b>{%print(bookingCancelMessage)%}</p></b>
-{% endif %}
+<div class="center">
+<div class="flex-box">
+    <h3 id="table-h3" style="text-align: center;">Cancel Booking</h1>
+    <form class="flex-column" action="cancelBooking", method="post">
+        <input class="form-control" type="number" name="userId" placeholder="enter userID">
+        <input class="form-control" type="number" name="roomPkgId" placeholder="enter packageID">
+        <input type="submit" value="Cancel Booking">
+    </form>
+    {% if bookingCancelMessage !="NULL" %}
+        <p style="text-align: center; font-size: larger;"><b>{%print(bookingCancelMessage)%}</p></b>
+    {% endif %}
+</div>
+</div>
 {% endblock %}

@@ -4,14 +4,17 @@
 
 {% block content %}
 
-<h1 style="text-align: center;">Checkout Page</h1>
-</br>
-<form style="text-align: center;" action="checkout", method="post">
-    UserId:  <input  type="number" name="userId_checkout"></br></br>
-    Room_ID:  <input  type="number" name="roomId_checkout"></br></br>
-    <input type="submit" value="Checkout">
-</form>
-</br></br>
-<p style="text-align: center;font-size: x-large;">{{checkoutMessage}}</p>
-
+<div class="center">
+<div class="flex-box">
+    <h3 class="table-h3">Checkout Page</h3>
+    </br>
+    <form class="flex-column" action="checkout", method="post">
+        <input type="number" class="form-control" name="userId_checkout" placeholder="enter userID">
+        <input type="number" class="form-control" name="roomId_checkout" placeholder="enter roomID">
+        <input type="submit" value="Checkout">
+    </form>
+    </br></br>
+    <p style="text-align: center;font-size: x-large;">{{checkoutMessage}}</p>
+</div>
+</div>
 {% endblock %}

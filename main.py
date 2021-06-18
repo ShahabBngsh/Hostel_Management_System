@@ -97,9 +97,10 @@ class Room_package_manager:
         return db_controller.dbcont_obj.cancel_booking(user_id,room_pkg_id)
 
     def check_due_payments(self, user_id, room_pkg_id):
-        return db_controller.dbcont_obj.get_due_payment(user_id, room_pkg_id)[0][1]
+        #return db_controller.dbcont_obj.get_due_payment(user_id, room_pkg_id)[0][1]
         # pass
         # return DB.check_due_payments()
+        return 1
 
     def check_customer_room_package(self, user_id, room_pkg_id):
         pass
@@ -348,7 +349,7 @@ def searchroom():
 @app.route("/duePayment",methods=['GET', 'POST'])
 def duePayment():
     if request.method == 'POST':
-        return render_template("duePayment.html",duePayment=hostel.check_due_payments(request.form['userId'],request.form['roomPkgId']))
+        return render_template("duePayment.html", duePayment=hostel.check_due_payments(request.form['userId'],request.form['roomPkgId']))
     return render_template("duePayment.html", duePayment=0)
 
 @app.route("/cancelBooking",methods=['GET', 'POST'])

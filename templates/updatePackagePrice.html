@@ -3,15 +3,15 @@
 {% block title %} updatePackagePrices {% endblock %}
 
 {% block content %}
-
-<h1 style="text-align: center;">Update Package Price</h1>
-</br>
-<form style="text-align: center;" action="updatePackagePrice", method="post">
-    PackageId:  <input  type="number" name="packageId"></br></br>
-    Package Price:  <input  type="number" name="newPrice"></br></br>
-    <input type="submit" value="Update Price">
-</form>
-{% if msg !="NULL" %}
-<p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
-{% endif %}
+<div class="center">
+<div class="flex-box">
+    <h3 id="table-h3">Update Package Price</h3>
+    <form style="text-align: center;" action="updatePackagePrice", method="post">
+        <input class="form-control" type="number" name="packageId" placeholder="enter package ID">
+        <input class="form-control" type="number" name="newPrice" placeholder="enter new Price">
+        <input type="submit" value="Update Price">
+    </form>
+    {% if msg !="NULL" %}
+    <p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
+    {% endif %}
 {% endblock %}
