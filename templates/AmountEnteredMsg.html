@@ -3,8 +3,9 @@
 {% block title %} login {% endblock %}
 
 {% block content %}
-
-<h1 style="text-align: center;">Amount Successfully Entered</h1></br></br>
+{% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
+{% endif %}
 <p style="text-align: center; font-size: xx-large;"><b>Entered Amount:</b> {{amount}}</p>
 
 <a href="/managerHome" target="_self"><button type="button" style="position:absolute; left: 1100px; ">Go back to Home Page</button></p></a>

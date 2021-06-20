@@ -81,7 +81,7 @@ body{
     width: 100%;
     background-color: black;
     position: absolute;
-    opacity: 0.9;
+    opacity: 0.8;
     z-index: 1;
 }
 .login-container .cover{
@@ -139,7 +139,8 @@ body{
     font-family: Brush Script MT, Brush Script Std, cursive;
     text-align: center;
     font-size: 3.2rem;
-    color: #1975b3;
+    color: rgba(247, 117, 10, 1);
+
 }
 .logoContainer img{
     height: 7rem;
@@ -164,7 +165,7 @@ body{
     margin-bottom: 1rem;
     width: 100%;
     
-    background: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     border-style: none;
     /* border: 0.1rem solid #aaa; */
     border-radius: 5px;
@@ -178,12 +179,12 @@ body{
 .leftLogin form input[type="submit"]{
     margin-top: 1rem;
     color: #ffffff;
-    background: rgba(25, 117, 179, 0.5);
+    background: rgba(247, 117, 10, 0.5);
     transition-property: transform;
     transition-duration: var(--scaleTime);;
 }
 .leftLogin form input[type="submit"]:hover{
-    background: rgba(25, 117, 179, 0.8);
+    background: rgba(247, 117, 10, 0.7);
     /* background-color: #ff7b39; */
     transform: scale(105%);
 }
@@ -199,7 +200,7 @@ body{
 }
 
 .otherLoginOptions1 a:hover{
-    color: rgba(25, 117, 179, 0.8);
+    color: rgba(247, 117, 10, 0.7);
 }
 
 .otherLoginOptions2{
@@ -240,7 +241,7 @@ margin-right: 0.5rem;
 .footer .footerLinks a{
     margin: 0rem 0.5rem;
     text-decoration: none;
-    color: #1975b3;
+    color: rgba(247, 117, 10, 1);
 }
 
 .footer .footerLinks a:hover{

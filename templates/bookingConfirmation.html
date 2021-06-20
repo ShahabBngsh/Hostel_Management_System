@@ -4,9 +4,12 @@
 
 {% block content %}
 
-<p style="font-size: xx-large; text-align: center;"><b> Booking Details</b></p>
-</br></br></br>
-<p style="font-size: x-large; text-align: center;">Booked Room: {{bookedRoom}}</p>
-<p style="font-size: x-large; text-align: center;">Booked Package: {{bookedPackage}}</p>
-<p style="font-size: x-large; text-align: center;">Total Price: {{totalPrice}}</p>
+  <p style="font-size: xx-large; text-align: center;"><b> Booking Details</b></p>
+  </br></br></br>
+  <p style="font-size: x-large; text-align: center;">Booked Room: {{bookedRoom}}</p>
+  <p style="font-size: x-large; text-align: center;">Booked Package: {{bookedPackage}}</p>
+  <p style="font-size: x-large; text-align: center;">Total Price: {{totalPrice}}</p>
+  {% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
+  {% endif %}
 {% endblock %}

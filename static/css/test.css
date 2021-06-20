@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body,html{
+    height:400vh;
+}
+.main-container{
+    height: 100%;
+    background-image: url(/static/images/homeBackground2.jpg);
+    background-size: cover;
+    /* background-attachment: scroll; */
+}
+
+.sub-container1,.sub-container2{
+    height: 100vh;
+}

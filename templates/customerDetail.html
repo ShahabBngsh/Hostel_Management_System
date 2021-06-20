@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/navarStyle.css">
+    <link rel="stylesheet" href="/static/css/footerStyle.css">
+    <link rel="stylesheet" href="/static/css/detailsStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/duepayments.css') }}">
+    <title>Customer Detail</title>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="logo-container">
+            <img src="/static/images/logo2.png" alt="">
+        </div>
+            <ul class="nav-links-container"> 
+                <li class="nav home"><a href="#">HOME</a></li>
+                <li class="nav services"><a href="#">SERVICES</a></li>
+                <li class="nav logout"><a href="#">LOGOUT</a></li>
+            </ul>
+    </nav>
+    <div class="flex-container"></div>
+    <div class="img-container">
+        <div class="cover"></div>
+        <h1>Customer Details</h1>
+    </div>
+    <div class="center">
+      <div class="flex-box", style="margin-bottom: 3rem;">
+        <table class="flex-container">
+          <thead>
+            <tr class="flex-container-header">
+              <th class="flex-column-th">Tenant ID</th>
+              <th class="flex-column-th">Tenant Name</th>
+              <th class="flex-column-th">CNIC</th>
+              <th class="flex-column-th">Contact Number</th>
+            </tr>
+          <thead>
+          <tbody>
+            {% for customer in all_details %}
+              <tr class="flex-container-inner">
+                <td class="flex-column">{{customer[0]}}</td>
+                <td class="flex-column">{{customer[1]}}</td>
+                <td class="flex-column">{{customer[2]}}</td>
+                <td class="flex-column">{{customer[3]}}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="flex-container">
+    <div class="footer">
+        <div class="footerCopyRight">
+            <p>&copy; Customer Login Form All rights reserved | Designed by Fastians</p>
+        </div>
+
+        <div class="footerLinks">
+            <a href="#">Terms of use</a>
+            <p>|</p>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>

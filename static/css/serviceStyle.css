@@ -10,7 +10,7 @@
     width: 100%;
     position: absolute;
     background-color: black;
-    opacity: 0.7;
+    opacity: 0.3;
     z-index: 1;
 }
 .img-container{
@@ -20,7 +20,8 @@
     align-items: center;
     height: 55vh;
     width: 100%;
-    background-image: url(/static/images/homeBackground6.jpg);
+    background-image: url(/static/images/homeBackground12.jpeg);
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover  ;
 }
@@ -48,13 +49,13 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    /* background-color: rgb(0, 0, 0,0.7); */
+    /* background-color: rgb(0, 0, 0,1); */
     padding-bottom: 1rem;
 }
 
 .service{
     text-align: center;
-    width: 25%;
+    width: 30%;
     /* width: 100%; */
     /* border: 1px solid black; */
     display: flex;
@@ -62,13 +63,14 @@
     justify-content: center;
     align-items:center;
 
+
 }
 
 .service .btn1{
     background-color: #6b6bff;
     text-decoration: none;
     color: black;
-    width: 90%;
+    width: 75%;
     border:none;
     /* border: 1px solid black; */
     padding:0.5rem 1rem;
@@ -86,11 +88,12 @@
 
 
 .service-img{
-    height: 150px;
-    width: 90%;
+    height: 200px;
+    width: 75%;
     background-size: cover;
     background-repeat: no-repeat;
     margin-top: 2rem;
+    box-shadow: 0px 0px 5px 5px black;
 }
 
 .service-img.paymentImg{

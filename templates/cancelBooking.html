@@ -11,8 +11,8 @@
         <input class="form-control" type="number" name="roomPkgId" placeholder="enter packageID">
         <input type="submit" value="Cancel Booking">
     </form>
-    {% if bookingCancelMessage !="NULL" %}
-        <p style="text-align: center; font-size: larger;"><b>{%print(bookingCancelMessage)%}</p></b>
+    {% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
     {% endif %}
 </div>
 </div>

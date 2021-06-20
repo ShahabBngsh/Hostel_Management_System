@@ -11,7 +11,10 @@
         <input class="form-control" type="number" name="newPrice" placeholder="enter new Price">
         <input type="submit" value="Update Price">
     </form>
-    {% if msg !="NULL" %}
-    <p style="text-align: center; font-size: larger;"><b>{%print(msg)%}</p></b>
+    {% if success !="NULL" %}
+        <p class=success-message><b>{%print(success)%}</p></b>
+    {% endif %}
+    {% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
     {% endif %}
 {% endblock %}

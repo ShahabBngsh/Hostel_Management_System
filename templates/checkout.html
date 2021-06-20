@@ -14,7 +14,14 @@
         <input type="submit" value="Checkout">
     </form>
     </br></br>
-    <p style="text-align: center;font-size: x-large;">{{checkoutMessage}}</p>
+
+    {% if success !="NULL" %}
+        <p class=success-message><b>{%print(success)%}</p></b>
+    {% endif %}
+    {% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
+    {% endif %}
+
 </div>
 </div>
 {% endblock %}

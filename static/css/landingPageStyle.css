@@ -21,7 +21,7 @@
     cursor:pointer;
     transition-property: background-color,transform;
     transition-duration: 500ms;
-    background-color: #6b6bff;
+    background-color: rgba(247, 117, 10, 0.7);
     transform: scale(105%)
 }
 .cover{

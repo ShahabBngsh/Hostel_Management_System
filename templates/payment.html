@@ -3,8 +3,9 @@
 {% block title %} payments {% endblock %}
 
 {% block content %}
+
 <div class="center">
-<div class="flex-box">
+    <div class="flex-box">
     <h3 id="table-h3">Payment Page</h3>
     <form class="flex-column" action="payment", method="post">
         <div id="searchbar" class="flex-row" style="flex: 30%;">
@@ -15,15 +16,18 @@
         </div>
         <input type="submit" value="SearchUser">
     </form>
-    </br>
-    <div class="flex-column">
-        <p class="flex-column" flex-column"><b>Due Payment</b>{{duePayment}}</p>
-        <form class="flex-column" action="AmountEnteredMsg", method="post">
-            <input  class="form-control" type="number" name="enteredAmount" placeholder="enter amount"></br></br>
-            <input  type="submit" name="submit" value="EnterAmount">
-        </form>
-    </div>
+</br>
+<div class="flex-column">
+    <p class="flex-column" flex-column"><b>Due Payment</b>{{duePayment}}</p>
+    <form class="flex-column" action="AmountEnteredMsg", method="post">
+        <input  class="form-control" type="number" name="enteredAmount" placeholder="enter amount"></br></br>
+        <input  type="submit" name="submit" value="EnterAmount">
+    </form>
+</div>
 
+{% if error !="NULL" %}
+        <p class=error-message><b>{%print(error)%}</p></b>
+{% endif %}
 </div>
 </div>
 {% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/navarStyle.css">
+    <link rel="stylesheet" href="/static/css/footerStyle.css">
+    <link rel="stylesheet" href="/static/css/detailsStyle.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/duepayments.css') }}">
+    <title>Tenant Record</title>
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="logo-container">
+            <img src="/static/images/logo2.png" alt="">
+        </div>
+            <ul class="nav-links-container"> 
+                <li class="nav home"><a href="#">HOME</a></li>
+                <li class="nav services"><a href="#">SERVICES</a></li>
+                <li class="nav logout"><a href="#">LOGOUT</a></li>
+            </ul>
+    </nav>
+    <div class="flex-container">
+    <div class="img-container">
+        <div class="cover"></div>
+        <h1>Tenant Record</h1>
+    </div>
+    </div>
+    <div class="center">
+    <div class="flex-box", style="margin-bottom: 3rem;">
+      <table class="flex-container">
+        <thead>
+          <tr class="flex-container-header">
+            <th class="flex-column-th">Tenant ID</th>
+            <th class="flex-column-th">Room_Package_Id</th>
+            <th class="flex-column-th">Due_Amount</th>
+            <th class="flex-column-th">Payed Amount</th>
+            <th class="flex-column-th">start-date</th>
+            <th class="flex-column-th">end_date</th>
+          </tr>
+        <thead>
+        <tbody >
+        {% for record in tenantRecord %}
+        <tr class="flex-container-inner">
+            <td class="flex-column">{{record[7]}}</td>
+            <td class="flex-column">{{record[6]}}</td>
+            <td class="flex-column">{{record[1]}}</td>
+            <td class="flex-column">{{record[2]}}</td>
+            <td class="flex-column">{{record[3]}}</td>
+            <td class="flex-column">{{record[4]}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <div class="flex-container">
+    <div class="footer">
+        <div class="footerCopyRight">
+            <p>&copy; Customer Login Form All rights reserved | Designed by Fastians</p>
+        </div>
+
+        <div class="footerLinks">
+            <a href="#">Terms of use</a>
+            <p>|</p>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>

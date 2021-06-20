@@ -1,0 +1,193 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn1{
+    background-color: rgba(32, 32, 32, 0.8);
+    color: white;
+    font-size: 0.95rem;
+    border: none;
+    padding:0.4rem 0.5rem;
+    border-radius: 5px;
+}
+
+.btn1:hover{
+    transition-property: background-color, transform;
+    transition-duration: 300ms;
+    transform: scale(105%);
+    background-color: rgba(32, 32, 32);
+    z-index: 1;
+}
+
+.cover{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.img-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(/static/images/homeBackground12.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 50vh;
+}
+
+.img-container h1{
+    position: relative;
+    color: white;
+    z-index:2; 
+    font-size: 2.5rem;
+    font-weight: 100;
+}
+
+.mainRoom-container{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.room-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 1rem;
+}
+.room-container ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* overflow: hidden; */
+}
+/* .room-container ul li{
+    position: relative;
+    top: 50%;
+    left:50%;
+} */
+.room-container ul li:nth-child(even){
+    background-color: rgb(238, 237, 237);
+}
+.room-container ul li:nth-child(odd){
+    background-color: rgb(250, 249, 249);
+}
+/* .roomImg-container{
+    position: relative;
+    top: 50%;
+    right: 50%;
+    transform: translate(-50%,-50%);
+} */
+.room-container ul li:nth-child(even) .roomImg-container{
+    background-image: url(/static/images/updateRoom1.jpeg);
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.room-container ul li:nth-child(odd) .roomImg-container{
+    background-image: url(/static/images/roomBooking.jpeg);
+    background-size:cover;
+    background-repeat: no-repeat;
+}
+.indRoom-container{
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: #ccc; */
+    border: 1px solid black;
+    width: 100%;
+    box-shadow: 0px 0px 3px 3px black;
+
+    margin-bottom: 1rem;
+}
+
+.indRoom-container .roomImg-container{
+    flex-basis: 35%;
+    height: 100%;
+
+    /* border: 1px solid black; */
+}
+
+.indRoom-container .roomContent-container{
+    height: 100%;
+    flex-basis: 45%;
+    /* border: 1px solid black; */
+    /* padding-top: 2rem; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.indRoom-container span{
+    font-weight: 100;
+}
+.roomHeading-container{
+    display: flex;
+    flex-direction: row;
+    height: 20%;
+    width: 90%;
+    /* border: 1px solid black; */
+    justify-content: space-around;
+    align-items: center;
+}
+/* .indRoom-container .roomContent-container .roomHeading-container h3{
+    padding-left: 2rem;
+    margin-right: 1rem;
+    height: 30%;
+} */
+.indRoom-container .roomContent-container p{
+    display: flex;
+    /* justify-content: center; */
+    padding-top: 1rem;
+    align-items: flex-start;
+    height: 60%;
+    width: 90%;
+    text-align: center;
+    /* border: 1px solid black; */
+}
+
+
+.indRoom-container .roomPrice-container{
+    height: 100%;
+    flex-basis: 20%;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+ }
+ .indRoom-container .roomPrice-container h2{
+     height: 15%;
+ }
+ .indRoom-container .roomPrice-container form{
+    height: 15%;
+}
+
+ /* .indRoom-container .roomPrice-container h2{
+     padding-left: 1rem;
+ } */
+
+ 
+ /* @media (max-width:800px){
+    .indRoom-containerP{
+        flex-direction: column;
+    }
+
+ } */
