@@ -2,10 +2,10 @@
 > Hostel Management System is a web based application which let you manage your hostel users, expenses and profits etc.
 
 ## Workflow and Teamwork
-> UI was built in pure HTML and CSS by Usama and Shahab.
-> All Flask related work was done by Usama.
-> Business layer was built by Piyush and Zain.
-> Database was created by Zain and Shahab.
+- UI was built in pure HTML and CSS by Usama and Shahab.
+- All Flask related work was done by Usama.
+- Business layer was built by Piyush and Zain.
+- Database was created by Zain and Shahab.
 ---
 
 ## Dependencies
