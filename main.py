@@ -5,10 +5,10 @@ import credentials  # importing our credentials from credentials.py
 
 
 import db_controller
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = '\xfd{H\xe5<\x95\xf9\xe3\x96.5\xd1\x01O<!\xd5\xa2\xa0\x9fR"\xa1\xa8'
+
 #Business Layer code by 'Piyush'
 class Users:
     def __init__(self, name, password, cnic, contact_no):
@@ -39,17 +39,10 @@ class Room_manager:
 
     def get_rooms(self):
         self.room_list = db_controller.dbcont_obj.get_rooms()
-        if self.room_list is None or self.room_list == '':
-            print("\tWarning: empty list returned\n")
-            return []
-        else:
-            return self.room_list
+        return self.room_list
 
     def checkout(self, roomno):
-        rowcount = db_controller.dbcont_obj.checkout(roomno)
-        if rowcount <= 0:
-            return False
-        return True
+        db_controller.dbcont_obj.checkout(roomno)
 
     def update_room_price(self, room_id, price):
         if (room_id is None) or (price is None) or room_id == '' or price == '':
@@ -76,15 +69,10 @@ class Package_manager:
 
     def search_packages(self):
         pass
-    
+        #self.room_list = DB.get_rooms
+        #return self.room_list
     def search_packages_by_roomNo(self, room_no):
-        self.package_list, rowcount = db_controller.dbcont_obj.search_packages_for_roomNo(room_no)
-        if int(room_no) <= 0:
-            print("ERROR: Invalid value\n")
-            return []
-        if rowcount <= 0 or self.package_list == '':
-            print("WARNING: no rooms exist against given room no\n")
-            return []
+        self.package_list = db_controller.dbcont_obj.search_packages_for_roomNo(room_no)
         return self.package_list
 
     def update_package_price(self, package_id, price):
@@ -117,23 +105,13 @@ class Room_package_manager:
         #return DB.reserve_room_and_package()
 
     def cancel_booking(self, user_id, room_pkg_id):
-        if user_id is None or room_pkg_id is None or user_id == '' or room_pkg_id == '':
-            return False
-        rowcount =  db_controller.dbcont_obj.cancel_booking(user_id, room_pkg_id)
-        if rowcount <= 0:
-            return False
-        return True
+        # pass
+        return db_controller.dbcont_obj.cancel_booking(user_id,room_pkg_id)
+
     def check_due_payments(self, user_id, room_pkg_id):
-        if user_id is None or room_pkg_id is None or user_id == '' or room_pkg_id == '':
-            print("ERROR: invalid ids are entered\n")
-            return None
-        else:
-            payment, rowcount = db_controller.dbcont_obj.get_due_payment(user_id, room_pkg_id)[0][1]
-            if rowcount <= 0:
-                print("Invoice doesn't exist againt given user\n")
-                return None
-            else:
-                return payment
+        return db_controller.dbcont_obj.get_due_payment(user_id, room_pkg_id)[0][1]
+        # pass
+        # return DB.check_due_payments()
 
     def check_customer_room_package(self, user_id, room_pkg_id):
         pass
@@ -229,34 +207,34 @@ class Invoice_manager:
         self.invoice_list = []
 
     def cash_payment(self, user_id, room_package_id, due_amount, payment):
-        if user_id is None or room_package_id is None or payment is None or due_amount is None:
-            return None
-        if user_id == '' or room_package_id == '' or payment == '' or due_amount == '':
-            return None
         self.invoice_list.append(Invoice(due_amount, payment))
         if payment >= due_amount:
             ret_val = db_controller.dbcont_obj.pay_amount(user_id, room_package_id, due_amount, due_amount)
             if (ret_val):
                 return (payment - due_amount)
             else:
-                return None
+                return -1
         else:
             ret_val = db_controller.dbcont_obj.pay_amount(user_id, room_package_id, due_amount, payment)
             if (ret_val):
                 return (payment - due_amount)
             else:
-                return None
+                return -1
 
     def credit_payment(self, card_no, expiration_date, amount, merchant_id):
         if (self.charge(card_no, expiration_date, amount, merchant_id) != -1):
             self.invoice_list.append(invoice(amount, amount))
+            # if (DB.payment(self.invoice_list[-1]) ):
+            #     return (payment - charges)
+            # else:
+            #     return -1
         else:
             return -1
     
 
     def get_due_payment(self, userid , room_package_id):
         return db_controller.dbcont_obj.get_due_payment(userid, room_package_id)
-
+ 
     def charge(self, card_number, expiration_date, amount, merchant_id):
         creditCard = apicontractsv1.creditCardType()
         creditCard.cardNumber = card_number
@@ -286,35 +264,15 @@ class Invoice_manager:
             print("response code: " + str(response.messages.resultCode))
             return -1
 
-    def gen_invoice(self, due_payment, room_package_id, user_id, roomNo):
-        if due_payment is None or due_payment == '':
-            print("ERROR: due amount field can't be Null\n")
-            return False
-        if room_package_id is None or room_package_id == '':
-            print("ERROR: room_package_id can't be Null\n")
-            return False
-        if user_id is None or user_id == '':
-            print("ERROR: user_id can't be Null\n")
-            return False
-        if roomNo is None or roomNo == '':
-            print("ERROR: room number can't be Null\n")
-            return False
-        if due_payment <= 0 or roomNo <= 0:
-            print("ERROR: payment can't be less than 0")
-            return False
-        rowcount = db_controller.dbcont_obj.gen_invoice(due_payment, room_package_id, user_id,roomNo)
-        if rowcount <= 0:
-            print("ERROR: something went wrong\n")
-            return False
-        else:
-            return True
-
+    def gen_invoice(self, due_payment, room_package_id, user_id,roomNo):
+        return db_controller.dbcont_obj.gen_invoice(due_payment, room_package_id, user_id,roomNo)
+ 
     def checkout(self, roomno):
         return self.RM.checkout(roomno)
 
     def get_tenant_record(self):
         return db_controller.dbcont_obj.get_tenant_record()
-
+        #return db list of to pay invoices
     def get_all_due_payments(self):
         return db_controller.dbcont_obj.get_all_due_payments()
 
@@ -339,7 +297,9 @@ availRooms=[]
 @app.route("/")
 def landingPage():
     return render_template('landingPage.html')
-
+# @app.route('/managerLogin',methods=['GET','POST'])
+# def managerLogin():
+#     return render_template("managerLogin.html")
 @app.route("/managerServices")
 def managerServices():
     return render_template('managerServices.html')
@@ -362,37 +322,65 @@ def userLogin():
         return render_template('userLogin.html',loginMessage="Invalid Login")
     return render_template('userLogin.html',loginMessage="NULL")
 
+# @app.route("/login",methods=['GET','POST'])
+# def login():
+#     if request.method == 'POST':
+#         users=hostel.get_all_users()
+#         for user in users:
+#             print(user[1],"  ",user[2]) 
+#             if request.form['userUsername']==user[1] and request.form['userPassword']==str(user[2]):
+#                 global userid
+#                 userid=user[0]
+#                 return render_template("userHome.html")
+#                 # return redirect(url_for('userHome'))
+#         return render_template('login.html',loginMessage="Invalid Login")
+#     return render_template('login.html',loginMessage="NULL")
+
 @app.route('/managerLogin',methods=['GET','POST'])
 def managerLogin():
     if request.method == 'POST':
         if request.form['employeeUsername']=="manager" and request.form['employeePassword']=="manager123":
             return redirect(url_for('managerServices'))
-        return render_template('managerLogin.html', loginMessage = "ERROR: Invalid Login")
+        return render_template('managerLogin.html',loginMessage="Invalid Login")
     return render_template('managerLogin.html',loginMessage="NULL")
+
+# @app.route("/managerHome")
+# def managerHome():
+#     return render_template("managerHome.html")
+
 
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
 
+# @app.route("/userHome")
+# def home():
+#     return render_template("userHome.html")
+
 @app.route("/searchroom")
 def searchroom():
     global availRooms 
-    availRooms = hostel.get_rooms()
+    availRooms= hostel.get_rooms()
     return render_template("searchRoom_new.html", availRooms=availRooms)
 
 @app.route("/duePayment",methods=['GET', 'POST'])
 def duePayment():
     print(hostel.get_all_due_payments())
     return render_template("duePayment.html",payments=hostel.get_all_due_payments()) 
+    # if request.method == 'POST':
+
+        # return render_template("duePayment.html",duePayment=hostel.check_due_payments(request.form['userId'],request.form['roomPkgId']))
+    # return render_template("duePayment.html", duePayment=0)
 
 @app.route("/cancelBooking",methods=['GET', 'POST'])
 def cancelbooking():
     if request.method == 'POST':
         if hostel.cancel_booking(request.form['userId'],request.form['roomPkgId']):
-            return render_template("cancelBooking.html", error="Booking Cancelled Successfully")
+            print("Here")
+            return render_template("cancelBooking.html",bookingCancelMessage="Booking Canceled")
         else:
-            return render_template("cancelBooking.html", error="Cancellation Failed")
-    iscancelled = True
+            return render_template("cancelBooking.html",bookingCancelMessage="Request Denied")
+    iscancelled = True #hostel.cancel_roomm()
     return render_template("cancelBooking.html", iscancelled=iscancelled)
 
 
@@ -416,6 +404,8 @@ def singlecustomerdetail():
 def roomSelection():
 
     if request.method == 'POST':
+        # print("\n\n\n\n\nhere")
+        # print(request.form["selectedRoom"])
         if request.form.get("selectRoom"):
             global bookedRoom, bookedRoomPrice, availRooms
             bookedRoom=request.form["selectedRoom"]
@@ -423,15 +413,19 @@ def roomSelection():
                 if int(room[0])==int(bookedRoom):
                     bookedRoomPrice=room[2]
             global package_list
+            # package_list,desc_list = hostel.search_packages_by_roomNo(bookedRoom)
             package_list = hostel.search_packages_by_roomNo(bookedRoom)
+            # print(request.form["RoomNo"])
+            #packages=getPackages(RoomNo)
             print(package_list)
-            return render_template("searchPackages_new.html", roomNo=bookedRoom, roomPrice=bookedRoomPrice, packages=package_list)
+            return render_template("searchPackages_new.html",roomNo=bookedRoom,roomPrice=bookedRoomPrice, packages=package_list)#, packages=packages
 
 @app.route("/bookingConfirmation", methods=['GET','POST'])
 def bookingConfirmation():
     if request.method == 'POST':
         if request.form.get("selectPackage"):
             
+            # print("\n\n\n",request.form["selectedPackage"],"\n\n\n")
             global bookedRoom
             global bookedRoomPrice
             global totalPrice
@@ -443,11 +437,9 @@ def bookingConfirmation():
                     totalPrice=int(packages[2])+int(bookedRoomPrice)
                     room_package_id=packages[4]
             print(int(totalPrice), int(room_package_id), int(userid))
-            ret = hostel.gen_invoice(int(totalPrice), int(room_package_id), int(userid),int(bookedRoom))
-            if ret:
-                return render_template("bookingConfirmation.html", bookedRoom=bookedRoom, bookedPackage=request.form["selectedPackage"],totalPrice=totalPrice)
-            else:
-                return render_template("bookingConfirmation.html", error="ERROR: Invalid value!")
+            hostel.gen_invoice(int(totalPrice), int(room_package_id), int(userid),int(bookedRoom))
+            # print("usama")
+            return render_template("bookingConfirmation.html", bookedRoom=bookedRoom, bookedPackage=request.form["selectedPackage"],totalPrice=totalPrice)#, packages=packages
 
 userId_manager=0
 room_package_id_manager=0
@@ -460,24 +452,22 @@ def payment():
         global due_payment
         global userId_manager 
         global room_package_id_manager
-        # userId_manager=request.form["userId"]
-        # room_package_id_manager=request.form["R_P_ID"]
-        duePayment = 0
-        duePayment = hostel.get_due_payment(request.form["userId"], request.form["R_P_ID"])
-        if duePayment is None:
-            return render_template("payment.html", error = "ERROR: due payment cannot be empty!")
-        return render_template("payment.html", duePayment=duePayment[0][1])
-    return render_template("payment.html", error = "NULL")
+        userId_manager=request.form["userId"]
+        room_package_id_manager=request.form["R_P_ID"]
+        duePayment=0
+        # duePayment=hostel.get_due_payment(userid, room_package_id)
+        duePayment=hostel.get_due_payment(request.form["userId"],request.form["R_P_ID"])
+        due_payment=duePayment[0][1]
+        return render_template("payment.html",duePayment=duePayment[0][1])
+    return render_template("payment.html")
 
 @app.route("/checkout", methods=['GET','POST'])
 def checkout():
     if request.method == 'POST':
-        ret = hostel.checkout(request.form["roomId_checkout"])
-        if ret is None or not ret:
-            return render_template("checkout.html", error="Check Out Failed") 
-        else:
-            return render_template("checkout.html", success='checkout successful!') 
-    return render_template("checkout.html", error='NULL')
+        hostel.checkout(request.form["roomId_checkout"])
+        checkoutMessage="Checked Out Successfully"
+        return render_template("checkout.html", checkoutMessage=checkoutMessage)        
+    return render_template("checkout.html")
 
 @app.route("/AmountEnteredMsg", methods=['GET','POST'])
 def AmountEnteredMsg():
@@ -485,12 +475,19 @@ def AmountEnteredMsg():
         global userId_manager
         global room_package_id_manager
         global due_payment
-        entered_amount = int(request.form["enteredAmount"])
-        ret = hostel.pay_amount(int(userId_manager), int(room_package_id_manager), int(due_payment), entered_amount)
-        if ret is None or not ret:
-            return render_template("AmountEnteredMsg.html", amount=entered_amount)
-        else:
-            return render_template("AmountEnteredMsg.html", error="ERROR: Invalid amount entered!")
+        # print(int(userId_manager), int(room_package_id_manager), int(due_payment), int(request.form["enteredAmount"]))
+        hostel.pay_amount(int(userId_manager), int(room_package_id_manager), int(due_payment), int(request.form["enteredAmount"]))
+        return render_template("AmountEnteredMsg.html",amount=request.form["enteredAmount"])
+# @app.package("/searchPackage")
+# def searchPackage():
+#     #function to get package of requested roomNo
+#     return render_template("searchroom.html", availRooms=availRooms)
+
+# @app.route("/packageSelection")
+# def packageSelection():
+#     if request.method == 'POST':
+#         pass
+        #send package to BL
 
 @app.route("/updateRoomPrice",methods=['GET','POST'])
 def updateRoomPrice():
@@ -498,9 +495,9 @@ def updateRoomPrice():
         roomID=request.form["roomId"]
         newPrice=request.form["newPrice"]
         if hostel.update_room_price(roomID, newPrice) == True:
-            return render_template("updateRoomPrice.html", success="Room price updated!")
+            return render_template("updateRoomPrice.html", msg="room price updated!")
         else:
-            return render_template("updateRoomPrice.html", error="ERROR: Invalid entry!")
+            return render_template("updateRoomPrice.html", msg="Invalid entry!")
     else:
         return render_template("updateRoomPrice.html")
 
@@ -510,9 +507,9 @@ def updatePackagePrice():
         packageID=request.form["packageId"]
         newPrice=request.form["newPrice"]
         if hostel.update_package_price(packageID, newPrice) == True:
-            return render_template("updatePackagePrice.html", success="Package price updated!")
+            return render_template("updatePackagePrice.html", msg="package price updated!")
         else:
-            return render_template("updatePackagePrice.html", error="Invalid entry!")
+            return render_template("updatePackagePrice.html", msg="Invalid entry!")
     return render_template("updatePackagePrice.html")
 
 @app.route("/tenantRecord", methods=['GET','POST'])

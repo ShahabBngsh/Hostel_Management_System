@@ -20,7 +20,7 @@ class DBcontroller:
     val = (room_no,price,capacity)
     cursor.execute(query, val)
     mydb.commit()
-    return cursor.rowcount
+    return 'Room added!'
 
   def get_rooms(self):
     query = "SELECT room_no, capacity, price, floor_no FROM Room where reserve=0;"
@@ -33,7 +33,7 @@ class DBcontroller:
     cursor.executemany(query, val)
     mydb.commit()
     print(cursor.rowcount, "record inserted.")
-    return cursor.rowcount
+    return "Package added"
 
   def get_packages(self):    
     query = "SELECT * from packages;"
@@ -41,10 +41,21 @@ class DBcontroller:
     return cursor.fetchall()
   
   def search_packages_for_roomNo(self, room_no):    
-    query = "SELECT rp.package_id,rp.room_id,p.price,p.description,rp.id from Room_Package rp, Package p WHERE (rp.room_id=%s) and (rp.package_id=p.id);"
+    query = "SELECT rp.package_id,rp.room_id,p.price,p.description,rp.id from Room_Package rp, package p WHERE (rp.room_id=%s) and (rp.package_id=p.id);"
     val1 = (room_no, )
     cursor.execute(query, val1)
-    return cursor.fetchall(), cursor.rowcount
+    return cursor.fetchall()
+    # ans1=cursor.fetchall()
+    # descriptionList=[]
+    # for ans in ans1:
+    #   query2= "SELECT description from Package WHERE id=%s;"
+    #   val2=(ans[3],)
+    #   cursor.execute(query2, val2)
+    #   descriptionList.append(cursor.fetchall())
+
+    # val = (int(ans1[0]), )
+    
+    return ans1,descriptionList
   
   def get_hostel_details(self, hostel_id):
     query = "SELECT * FROM Hostel WHERE id=%s;"
@@ -52,17 +63,17 @@ class DBcontroller:
     cursor.execute(query, val)
     return cursor.fetchall()
 
-  def gen_invoice(self, due_payment, room_package_id, user_id, roomNo):
+  def gen_invoice(self, due_payment, room_package_id, user_id,roomNo):
     query = "INSERT INTO Invoice (due_amount, paid_amount, room_package_id, user_id) VALUES (%s,%s, %s, %s);"
-    val = (due_payment, 0, room_package_id, user_id)
+    val = (due_payment,0, room_package_id, user_id)
     cursor.execute(query, val)
     mydb.commit()
     query2 = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
-    val2 = (1, roomNo)
+    val2 = (1,roomNo)
     cursor.execute(query2, val2)
     mydb.commit()
     print(cursor.rowcount, "record inserted.")
-    return cursor.rowcount
+    return "Invoice generated"
   
   def get_all_users(self):
     query = "SELECT * FROM User;"
@@ -73,14 +84,22 @@ class DBcontroller:
     query = "SELECT user_id, due_amount FROM Invoice WHERE user_id=%s;"
     val = (user_id, )
     cursor.execute(query, val)
-    return cursor.fetchall(), cursor.rowcount
+    return cursor.fetchall()
 
   def get_due_payment(self, user_id, room_package_id):
     query = "SELECT user_id, due_amount FROM Invoice WHERE user_id=%s and room_package_id=%s;"
     val = (user_id, room_package_id)
     cursor.execute(query, val)
-    return cursor.fetchall(), cursor.rowcount
+    return cursor.fetchall()
   
+  # def pay_amount(self, user_id, room_package_id, due_amount, payment):
+  #   print(user_id, room_package_id, due_amount, payment)
+  #   query = "UPDATE Invoice SET paid_amount = %s WHERE user_id=%s and room_package_id=%s;"
+  #   val = (payment, user_id, room_package_id)
+  #   cursor.execute(query, val)
+  #   mydb.commit()
+  #   print(cursor.rowcount, "record(s) affected")
+  #   return True
 
   def pay_amount(self, user_id, room_package_id, due_amount, payment):
     query = "UPDATE Invoice SET paid_amount=%s, due_amount=%s WHERE user_id=%s and room_package_id=%s;"
@@ -88,7 +107,7 @@ class DBcontroller:
     cursor.execute(query, val)
     mydb.commit()
     print(cursor.rowcount, "record(s) affected")
-    return cursor.rowcount
+    return True
 
   def cancel_booking(self, user_id, room_package_id):
     query = "DELETE from invoice where user_id=%s and room_package_id=%s;"
@@ -96,30 +115,34 @@ class DBcontroller:
     cursor.execute(query, val)
     mydb.commit()
     print(cursor.rowcount, "record(s) affected")
+
     query = "UPDATE ROOM set reserve=0 where room_no =(select room_id from room_package where id=%s);"
-    val = (room_package_id, )
+    print("!@!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print(room_package_id)
+    val = (room_package_id,)
     cursor.execute(query, val)
     mydb.commit()
     print(cursor.rowcount, "record(s) affected")
-    return cursor.rowcount
+    return True
 
   def get_all_due_payments(self):
-    query="Select i.user_id, rp.room_id,i.paid_amount,i.due_amount from Invoice i, Room_Package rp where i.room_package_id=rp.id and i.due_amount>0"
+    query="Select i.user_id, rp.room_id,i.paid_amount,i.due_amount from invoice i, room_package rp where i.room_package_id=rp.id and i.due_amount>0"
     cursor.execute(query)
     return cursor.fetchall()
-
   def search_customer(self):
-    query = "SELECT id, name,cnic,contact_no FROM User;"
+    query = "SELECT id, name,cnic,contact_no FROM user;"
     cursor.execute(query)      
     return cursor.fetchall()
 
+
+
   def checkout(self, roomno):
     query = "UPDATE Room SET reserve=%s WHERE room_no = %s;"
-    val = (0, roomno)
+    val = (0,roomno)
     cursor.execute(query, val)
     mydb.commit()
     print((cursor.rowcount, "record(s) affected"))
-    return cursor.rowcount 
+    return True 
 
   def update_room_price(self, roomId, newPrice):
     query = "UPDATE Room SET price=%s WHERE room_no=%s"
@@ -128,7 +151,6 @@ class DBcontroller:
     mydb.commit()
     print((cursor.rowcount, "record(s) affected"))
     return cursor.rowcount
-
   def update_package_price(self, packageId, newPrice):
     query = "UPDATE Package SET price=%s WHERE id=%s"
     val = (newPrice, packageId)
@@ -138,8 +160,7 @@ class DBcontroller:
     return cursor.rowcount
     
   def get_tenant_record(self):
-    query = "SELECT * FROM Invoice;"
+    query = "SELECT * FROM invoice;"
     cursor.execute(query)      
     return cursor.fetchall()
-
 dbcont_obj = DBcontroller()
