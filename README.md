@@ -21,7 +21,7 @@
    $ export FLASK_APP=main.py
    $ flask run
 ```
-- Now `control + click` on local host.
+- Now `ctrl + click` on local host.
 
 [![run command](https://imgur.com/a/e592BOX.jpg)]()
 ---
